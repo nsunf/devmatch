@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/css/index.css" rel="stylesheet">
+<link href="/css/global.css" rel="stylesheet">
+</head>
+<body>
+	<div layout:fragment="content">
+		<main class="container-fluid px-0">
+			<!-- 메인 섹션 -->
+			<section id="main-section" class="position-relative hstack">
+				<!-- 백그라운드 이미지 -->
+				<div
+					class="main-bg-image d-none d-md-block ratio ratio-16x9 position-absolute"></div>
+				<div class="main-bg-image d-md-none ratio position-absolute"
+					style="-bs-aspect-ratio: 150%;"></div>
+				<!-- 메인 섹션 내 -->
+				<div
+					class="container-md position-relative my-auto px-0 py-5 py-md-0">
+					<div class="row">
+						<!-- 사이트 소개글 -->
+						<div class="col-md-6 vstack ps-5 text-white">
+							<h2 class="mt-auto fw-bold" style="font-size: 32px;">DevMatch</h2>
+							<p class="mb-auto" style="height: 100px;">
+								개발자와 직접 소통하며 작업물을 받아보세요.<br> 수 많은 파트너들의 프로필을 확인하고<br>
+								나에게 맞는 파트너의 작업물을 받아보세요.
+							</p>
+						</div>
+						<!-- 프로필 카드 -->
+						<div class="col-md-6">
+
+							<div class="profile-card-wrap ratio ratio-4x3 position-relative">
+
+								<div
+									class="profile-card-small absolute-center main-section-profile-card-1 background-pattern-1">
+									<div class="profile-card__top">
+										<div class="profile-card__grade">
+											<img src="/images/grade/Level=1.png" alt="grad-img">
+										</div>
+										<div class="profile-card__desc">
+											<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+											<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+												만들어드립니다.</p>
+										</div>
+									</div>
+									<div class="profile-card__bottom prov-profile">
+										<img class="prov-profile__img"
+											src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+											class="prov-profile__name">김김김</span>
+									</div>
+								</div>
+
+								<div
+									class="profile-card-small absolute-center main-section-profile-card-2 background-pattern-2">
+									<div class="profile-card__top">
+										<div class="profile-card__grade">
+											<img src="/images/grade/Level=1.png" alt="grad-img">
+										</div>
+										<div class="profile-card__desc">
+											<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+											<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+												만들어드립니다.</p>
+										</div>
+									</div>
+									<div class="profile-card__bottom prov-profile">
+										<img class="prov-profile__img"
+											src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+											class="prov-profile__name">김김김</span>
+									</div>
+								</div>
+
+								<div
+									class="profile-card-small absolute-center main-section-profile-card-3 background-pattern-3">
+									<div class="profile-card__top">
+										<div class="profile-card__grade">
+											<img src="/images/grade/Level=1.png" alt="grad-img">
+										</div>
+										<div class="profile-card__desc">
+											<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+											<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+												만들어드립니다.</p>
+										</div>
+									</div>
+									<div class="profile-card__bottom prov-profile">
+										<img class="prov-profile__img"
+											src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+											class="prov-profile__name">김김김</span>
+									</div>
+								</div>
+
+								<div
+									class="profile-card-small absolute-center main-section-profile-card-4 background-pattern-4">
+									<div class="profile-card__top">
+										<div class="profile-card__grade">
+											<img src="/images/grade/Level=1.png" alt="grad-img">
+										</div>
+										<div class="profile-card__desc">
+											<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+											<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+												만들어드립니다.</p>
+										</div>
+									</div>
+									<div class="profile-card__bottom prov-profile">
+										<img class="prov-profile__img"
+											src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+											class="prov-profile__name">김김김</span>
+									</div>
+								</div>
+
+								<div
+									class="profile-card-small absolute-center main-section-profile-card-5">
+									<div class="profile-card__top background-pattern-5">
+										<div class="profile-card__grade">
+											<img src="/images/grade/Level=1.png" alt="grad-img">
+										</div>
+										<div class="profile-card__desc">
+											<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+											<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+												만들어드립니다.</p>
+										</div>
+									</div>
+									<div class="profile-card__bottom prov-profile">
+										<img class="prov-profile__img"
+											src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+											class="prov-profile__name">김김김</span>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="hstack">
+								<a class="ms-auto me-5" href="./view/findPartner.html"><button
+										class="btn btn-primary btn-lg">파트너 찾기</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- 사이트 이용방법 -->
+			<section id="site-info-section" class="bg-body vstack pb-5 pb-md-0">
+				<div class="container-fluid px-0 my-auto">
+					<div class="row g-5 g-md-0">
+
+						<div class="col-xl-4 col-md-6">
+							<div class="intro-step intro-step--1">
+								<div class="intro-step__card">
+									<span class="intro-step__text">파트너를 찾아보세요.</span>
+								</div>
+								<img class="intro-step__img"
+									src="/images/bubble-gum/bubble-gum-searching.gif"
+									alt="searching-gif">
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-md-6">
+							<div class="intro-step intro-step--2">
+								<div class="intro-step__card">
+									<span class="intro-step__text">파트너와 소통하세요.</span>
+								</div>
+								<img class="intro-step__img"
+									src="/images/bubble-gum/bubble-gum-workflow.gif"
+									alt="searching-gif">
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-md-6 pb-5 pb-xl-0">
+							<div class="intro-step intro-step--3">
+								<div class="intro-step__card">
+									<span class="intro-step__text">파트너를 찾아보세요.</span>
+								</div>
+								<img class="intro-step__img"
+									src="/images/bubble-gum/bubble-gum-web-design.gif"
+									alt="searching-gif">
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- 프로필 카드 설명 -->
+			<section id="profile-card-info" class="vstack py-5 py-lg-auto"
+				style="min-height: 75vh;">
+				<div id="profile-info-section" class="container-md my-auto">
+					<div class="row gx-5 gx-lg-3 gy-5 gy-lg-3">
+
+						<div class="col-lg-6 vstack px-0 px-md-2">
+							<div class="profile-card-big mx-auto ms-md-auto me-md-0">
+								<div class="profile-card__top">
+									<div class="profile-card__grade">
+										<img src="/images/grade/Level=1.png" alt="grad-img">
+									</div>
+									<div class="profile-card__desc">
+										<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+										<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+											만들어드립니다.</p>
+									</div>
+								</div>
+								<div class="profile-card__bottom prov-profile">
+									<img class="prov-profile__img"
+										src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+										class="prov-profile__name">김김김</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6 vstack px-0 px-md-2">
+							<div class="profile-card-big mx-auto ms-md-0 me-md-auto">
+								<div class="profile-card__top">
+									<div class="profile-card__grade">
+										<img src="/images/grade/Level=2.png" alt="grad-img">
+									</div>
+									<div class="profile-card__desc">
+										<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+										<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+											만들어드립니다.</p>
+									</div>
+								</div>
+								<div class="profile-card__bottom prov-profile">
+									<img class="prov-profile__img"
+										src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+										class="prov-profile__name">김김김</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6 vstack px-0 px-md-2">
+							<div class="profile-card-big mx-auto ms-md-auto me-md-0">
+								<div class="profile-card__top">
+									<div class="profile-card__grade">
+										<img src="/images/grade/Level=5.png" alt="grad-img">
+									</div>
+									<div class="profile-card__desc">
+										<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+										<p class="desc__intro">자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를
+											만들어드립니다.</p>
+									</div>
+								</div>
+								<div class="profile-card__bottom prov-profile">
+									<img class="prov-profile__img"
+										src="/images/test/profile-img-640.jpg" alt="prov-img"> <span
+										class="prov-profile__name">김김김</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6 px-0 px-md-2 text-white">
+							<div class="mx-auto ms-md-0 me-md-auto pb-5 pb-md-0"
+								style="width: 380px;">
+								<h4 class="pt-3">lorem ipsum dolor sit amet</h4>
+								<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+									Consectetur accusamus doloribus magnam.</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+			<!-- 사이트 통계 -->
+			<section class="bg-body">
+				<div class="container-md py-5">
+					<div class="row py-5">
+						<div class="col-md-6 hstack">
+							<h4 class="my-auto ms-auto me-auto me-md-0 fs-2">
+								50,000,000원<span class="fs-5 ps-4">총 매출액</span>
+							</h4>
+						</div>
+						<div class="col-md-6 hstack">
+							<img class="mx-auto mx-md-0"
+								src="./images/bubble-gum/bubble-gum-blue-piggy-bank-with-bitcoin-coin.gif"
+								alt="sales-gif" width="32%">
+						</div>
+					</div>
+					<div class="row py-5">
+						<div class="col-md-6 hstack">
+							<img class="ms-auto me-auto me-md-0"
+								src="./images/bubble-gum/bubble-gum-included-cell-phone-1.gif"
+								alt="cell-phone-gif" width="32%">
+						</div>
+						<div class="col-md-6 hstack">
+							<h4 class="my-auto mx-auto mx-md-0 fs-2">
+								1000건<span class="fs-5 ps-4">총 요청 건수</span>
+							</h4>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+	<script src="/js/global.js"></script>
+</body>
+</html>

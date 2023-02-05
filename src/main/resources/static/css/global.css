@@ -1,0 +1,57 @@
+:root,
+[data-bs-theme=light] {
+  --bs-primary: #F1827E !important;
+  --bs-white: #F9F9FB !important;
+  --bs-black: #151517 !important;
+  --bs-gray: #6F6F72 !important;
+  --bs-gray-dark: #424244 !important;
+  --bs-secondary: #9D9D9F !important;
+  --bs-body-bg: #F7F7FA !important;
+  --bs-secondary-bg: #9d9d9f !important;
+  --bs-tertiary-bg: #6F6F72 !important;
+  --bs-gray-100: #F7F7FA !important;
+  --bs-gray-300: #CACACD !important;
+  --bs-gray-500: #9D9D9F !important;
+  --bs-gray-700: #6F6F72 !important;
+  --bs-gray-900: #424244 !important;
+  --bs-link-color: #9d9d9f;
+  --bs-link-hover-color: #CACACD;
+  --bs-primary-rgb: 241, 130, 126 !important;
+  --bs-white-rgb: 249, 249, 251 !important;
+  --bs-black-rgb: 21, 21, 23 !important;
+  --bs-secondary-rgb: 157, 157, 159 !important;
+  --bs-body-bg-rgb: 247, 247, 250 !important;
+  --bs-secondary-bg-rgb: 157, 157, 159 !important;
+  --bs-tertiary-bg-rgb: 111, 111, 114 !important;
+  --bs-link-color-rgb: rgb(157, 157, 159);
+  --bs-link-hover-color-rgb: rgb(202, 202, 205);
+}
+
+html, body {
+  width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+}
+
+.btn-primary {
+  --bs-btn-bg: #F1827E;
+  --bs-btn-border-color: #F1827E;
+  --bs-btn-hover-bg: #fd6f6a;
+  --bs-btn-hover-border-color: #fd6f6a;
+  --bs-btn-active-bg: #f25f5a;
+  --bs-btn-active-border-color: #f25f5a;
+  --bs-btn-disabled-bg: #CACACD;
+  --bs-btn-disabled-border-color: #CACACD;
+}
+
+.nav-pills {
+  --bs-nav-pills-link-active-bg: #F1827E !important;
+}
+
+.pagination {
+  --bs-pagination-active-bg: #F1827E !important;
+  --bs-pagination-active-border-color: #F1827E !important;
+}/*# sourceMappingURL=global.css.map */
