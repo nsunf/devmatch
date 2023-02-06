@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<title>Insert title here</title>
+<link href="/css/signup.css" rel="stylesheet">
+<link href="/css/global.css" rel="stylesheet">
+<th:block layout:fragment="css">
+	<style>
+		.fieldError {
+			color: red;
+		}
+	</style>
+</th:block>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		document.onload = () => {
+			const frm = document.frm;
+			const signupBtn = document.getElementById("signup-btn");
+			const password = document.getElementById("password");
+			const confirmPassword = document.getElementById("signup_pw_conf");
+			
+			frm.addEventListener("click", e => {
+				e.preventDefault();
+				alert('ha')
+			})
+			
+		};
+	</script>
+</th:block>
+</head>
+<body>
+  
+  <!-- 회원가입 -->
+  <div layout:fragment="content">
+
+		<main>
+			<div class="container-md py-5">
+				<div class="row">
+					<div class="col-10 col-sm-6 col-lg-4 py-5 mx-auto">
+
+						<h2 class="text-center pb-4">회원가입</h2>
+						<form name="frm" class="row row-cols-1 gy-4" action="/auth/signup" method="post" th:object="${memberFormDto}">
+							<div class="row row-cols-2 mx-auto">
+								<div class="col">
+									<input type="radio" class="btn-check" th:field="*{role}" value="CUSTOMER" autocomplete="off" required>
+									<label class="role-btn btn btn-primary w-100" for="role1">일반</label>
+								</div>
+								<div class="col">
+									<input type="radio" class="btn-check" th:field="*{role}" value="PROVIDER" autocomplete="off" required>
+									<label class="role-btn btn btn-primary w-100" for="role2">파트너</label>
+								</div>
+							 </div>
+							<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p>
+
+							<div class="col">
+								<label th:for="email" class="form-label">이메일</label>
+								<input type="email" class="form-control" th:field="*{email}" placeholder="email@email.com" required>
+								<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p>
+							</div>
+			
+							<div class="col">
+								<label th:for="password" class="form-label">비밀번호</label>
+								<input type="password" class="form-control" th:field="*{password}" placeholder="비밀번호를 입력해주세요." min="8" max="36" required>
+								<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect Data</p>
+								<div class="invalid-feedback">
+									비밀번호를 입력해주세요.
+								</div>
+							</div>
+
+							<div class="col">
+								<label for="signup_pw_conf" class="form-label">비밀번호 확인</label>
+								<input type="password" class="form-control" id="signup_pw_conf" placeholder="비밀번호를 입력해주세요." min="8" max="36" required>
+								<div class="invalid-feedback">
+									비밀번호를 입력해주세요.
+								</div>
+							</div>
+
+							<div class="col">
+								<div class="row gx-2">
+									<div class="col-6">
+										<label for="last_name" class="form-label">성</label>
+										<input type="text" class="form-control" th:field="*{last_name}" placeholder="성" required>
+										<p th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}" class="fieldError">Incorrect Data</p>
+										<div class="invalid-feedback">
+											이름을 입력해주세요.
+										</div>
+									</div>
+									<div class="col-6">
+										<label for="fisrt_name" class="form-label">이름</label>
+										<input type="text" class="form-control" th:field="*{first_name}" placeholder="이름" required>
+										<p th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}" class="fieldError">Incorrect Data</p>
+										<div class="invalid-feedback">
+											이름을 입력해주세요.
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col">
+								<label for="ssn_1" class="form-label">주민번호</label>
+								<div class="input-group mb-3">
+									<input type="number" class="form-control" th:field="*{ssn_1}" placeholder="주민번호 앞자리" required>
+									<span class="input-group-text bg-primary text-white">-</span>
+									<input type="number" class="form-control" th:field="*{ssn_2}" placeholder="0000000" required>
+								</div>
+								<p th:if="${#fields.hasErrors('ssn_1')}" th:errors="*{ssn_1}" class="fieldError">Incorrect Data</p>
+								<p th:if="${#fields.hasErrors('ssn_2')}" th:errors="*{ssn_2}" class="fieldError">Incorrect Data</p>
+								<div class="invalid-feedback">
+									주민등록번호를 입력해주세요.
+								</div>
+							</div>
+
+							<div class="col">
+								<label for="phone_1" class="form-label">전화번호</label>
+								<div class="input-group mb-3">
+									<input type="number" class="form-control" th:field="*{phone_1}" placeholder="010" required>
+									<span class="input-group-text bg-primary text-white">-</span>
+									<input type="number" class="form-control" th:field="*{phone_2}" placeholder="0000" required>
+									<span class="input-group-text bg-primary text-white">-</span>
+									<input type="number" class="form-control" th:field="*{phone_3}" placeholder="0000" required>
+								</div>
+								<p th:if="${#fields.hasErrors('phone_1')}" th:errors="*{phone_1}" class="fieldError">Incorrect Data</p>
+								<p th:if="${#fields.hasErrors('phone_2')}" th:errors="*{phone_2}" class="fieldError">Incorrect Data</p>
+								<p th:if="${#fields.hasErrors('phone_3')}" th:errors="*{phone_3}" class="fieldError">Incorrect Data</p>
+								<div class="invalid-feedback">
+									전화번호를 입력해주세요.
+								</div>
+							</div>
+
+							<button id="signup-btn" class="btn btn-primary w-50 mb-3 mx-auto" type="submit">회원가입</button>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</main>
+  </div>
+</body>
+</html>

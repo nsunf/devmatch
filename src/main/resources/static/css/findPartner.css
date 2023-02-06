@@ -330,80 +330,19 @@
     transform: translate(-50%, -50%) rotateY(0deg) rotate(0deg);
   }
 }
-#main-section {
-  aspect-ratio: 16/9 !important;
-}
-
-@media screen and (max-width: 768px) {
-  #main-section {
-    aspect-ratio: 2/3 !important;
-  }
-}
-@media screen and (min-width: 769px) {
-  #site-info-section {
-    aspect-ratio: 16/9;
-  }
-}
-.main-bg-image {
-  background-image: url("../images/main-bg-1350.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.main-bg-image:nth-child(2) {
-  --bs-aspect-ratio: 150%;
-}
-
-.intro-step {
-  position: relative;
-}
-.intro-step__card {
-  width: 65%;
-  aspect-ratio: 4/3;
-  margin: 0 auto;
-  margin-top: 80px;
-  border: 4px solid transparent;
-  border-radius: 24px;
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-  text-align: center;
-}
-.intro-step__text {
+.profile-card-link {
   display: block;
-  padding-top: 40px;
-  font-size: 18px;
-  font-weight: 600;
-}
-.intro-step__img {
-  position: absolute;
-}
-.intro-step--1 .intro-step__card {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(42deg, rgb(243, 147, 147) 0%, rgb(218, 146, 236) 100%);
-}
-.intro-step--1 .intro-step__img {
-  bottom: -30%;
-  left: -8%;
-  width: 60%;
-}
-.intro-step--2 .intro-step__card {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(42deg, rgb(254, 159, 105) 0%, rgb(146, 248, 255) 100%);
-}
-.intro-step--2 .intro-step__img {
-  bottom: -42%;
-  right: -2%;
-  width: 60%;
-}
-.intro-step--3 .intro-step__card {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(42deg, rgb(255, 151, 151) 0%, rgb(255, 204, 146) 100%);
-}
-.intro-step--3 .intro-step__img {
-  bottom: -30%;
-  right: 0%;
-  width: 45%;
-  transform: scaleX(-1);
+  width: 100%;
 }
 
-#profile-card-info {
-  background: linear-gradient(42deg, #ADE7FC 0%, #F9ADDD 100%);
-}/*# sourceMappingURL=index.css.map */
+.profile-card, .profile-card-small, .profile-card-big {
+  width: 100%;
+  height: initial;
+  aspect-ratio: 16/9;
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.profile-card:hover, .profile-card-small:hover, .profile-card-big:hover {
+  transform: scale(1.02);
+}/*# sourceMappingURL=findPartner.css.map */

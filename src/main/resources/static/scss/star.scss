@@ -1,0 +1,115 @@
+$--star-zero: url("../images/star-zero.png");
+$--star-half: url("../images/star-half.png");
+$--star-full: url("../images/star-full.png");
+
+.star-group {
+  display: flex;
+}
+
+.star {
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-image: $--star-zero;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.rate-half > .star {
+  &:first-child
+  {
+    background-image: $--star-half;
+  }
+}
+
+.rate-1 > .star {
+  &:first-child
+  {
+    background-image: $--star-full;
+  }
+}
+
+.rate-1-half > .star {
+  &:first-child
+  {
+    background-image: $--star-full;
+  }
+
+  &:nth-child(2)
+  {
+    background-image: $--star-half;
+  }
+}
+
+.rate-2 > .star {
+  &:first-child,
+  &:nth-child(2)
+  {
+    background-image: $--star-full;
+  }
+}
+
+.rate-2-half > .star {
+  &:first-child,
+  &:nth-child(2)
+  {
+    background-image: $--star-full;
+  }
+
+  &:nth-child(3)
+  {
+    background-image: $--star-half;
+  }
+}
+
+.rate-3 > .star {
+  &:first-child,
+  &:nth-child(2),
+  &:nth-child(3)
+  {
+    background-image: $--star-full;
+  }
+}
+
+.rate-3-half > .star {
+  &:first-child,
+  &:nth-child(2),
+  &:nth-child(3)
+  {
+    background-image: $--star-full;
+  }
+
+  &:nth-child(4)
+  {
+    background-image: $--star-half;
+  }
+}
+
+.rate-4 > .star {
+  &:first-child,
+  &:nth-child(2),
+  &:nth-child(3),
+  &:nth-child(4)
+  {
+    background-image: $--star-full;
+  }
+}
+
+.rate-4-half > .star {
+  &:first-child,
+  &:nth-child(2),
+  &:nth-child(3),
+  &:nth-child(4)
+  {
+    background-image: $--star-full;
+  }
+
+  &:nth-child(5)
+  {
+    background-image: $--star-half;
+  }
+}
+
+.rate-5 > .star {
+  background-image: $--star-full;
+}

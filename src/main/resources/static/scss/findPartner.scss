@@ -1,0 +1,18 @@
+@import "./profile-card.scss";
+
+.profile-card-link {
+  display: block;
+  width: 100%;
+}
+
+.profile-card, .profile-card-small, .profile-card-big {
+  width: 100%;
+  height: initial;
+  aspect-ratio: 16/9;
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.profile-card:hover, .profile-card-small:hover, .profile-card-big:hover {
+  transform: scale(1.02);
+}
