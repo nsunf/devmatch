@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+<link href="/css/findPartner.css" rel="stylesheet">
+</head>
+	<div layout:fragment="content">
+		<main >
+			<!-- 배너 -->
+			<section style="background: linear-gradient(45deg, rgba(255,122,0,0.3) 0%, rgba(66,0,255,0.3) 100%); height: 400px;">
+				<div class="container-md h-100">
+					<div class="row h-100 py-4">
+						<div class="col-2 d-none d-md-block"></div>
+						<div class="col-md-4 h-md-100 hstack">
+							<div class="w-75 mx-auto my-auto text-white">
+								<h2>파트너 찾기</h2>
+								<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eius, fugit excepturi magni rerum iure modi sint. Asperiores.</p>
+							</div>
+						</div>
+						<div class="col-md-4 h-md-100 hstack">
+							<img class="mx-auto my-auto" src="../images/bubble-gum/bubble-gum-psychologist-online-consultation.png" alt="" style="transform: scaleX(-1);">
+						</div>
+						<div class="col-2 d-none d-md-block"></div>
+					</div>
+				</div>
+			</section>
+			<!-- 메인 -->
+			<section class="container-md px-3">
+				<div class="row my-3 my-sm-5">
+					<!-- 검색 및 필터 -->
+					<div class="col-lg-3">
+						<div  class="border rounded-4 bg-white p-4 sticky-top" style="top: 1rem;">
+							<form class="d-flex flex-column" role="search" action="./findPartner.html">
+								<!-- 검색창 -->
+								<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+								
+								<div class="row">
+									<!-- 기술 스택 -->
+									<div class="col-6 col-lg-12 my-3">
+										<h5>기술 스택</h5>
+										<div class="ms-3">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" name="stack" value="java" id="stack-1">
+												<label class="form-check-label" for="stack-1">Java</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" name="stack" value="javascript" id="stack-2">
+												<label class="form-check-label" for="stack-2">Javascript</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" name="stack" value="springboot" id="stack-3">
+												<label class="form-check-label" for="stack-3">Spring Boot</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" name="stack" value="nodejs" id="stack-4">
+												<label class="form-check-label" for="stack-4">Nodejs</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" name="stack" value="reactjs" id="stack-5">
+												<label class="form-check-label" for="stack-5">React js</label>
+											</div>
+										</div>
+									</div>
+									<!-- 등급 -->
+									<div class="col-6 col-lg-12 my-3">
+										<h5>등급</h5>
+										<div class="ms-3">
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="grade" value="1" id="grade-1">
+												<label class="form-check-label" for="grade-1">I</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="grade" value="2" id="grade-2">
+												<label class="form-check-label" for="grade-2">II</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="grade" value="3" id="grade-3">
+												<label class="form-check-label" for="grade-3">III</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="grade" value="4" id="grade-4">
+												<label class="form-check-label" for="grade-4">IV</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="grade" value="5" id="grade-5">
+												<label class="form-check-label" for="grade-5">V</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- 버튼 -->
+								<div class="hstack my-3">
+									<button class="btn btn-secondary ms-auto me-3" type="button">초기화</button>
+									<button class="btn btn-primary me-auto me-3" type="submit">검색</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- 프로필 카드 -->
+					<div class="col-lg-8 my-3 my-lg-0 px-4 px-sm-3">
+						<div class="row row-cols-1 row-cols-sm-2 g-2 g-lg-3 g-xxl-4 gy-4 gy-sm-2">
+							
+							<div class="col">
+								<a class="text-decoration-none profile-card-link" href="./provProfile.html">
+									<div class="profile-card background-gradient-1 mx-auto">
+										<div class="profile-card__top">
+											<div class="profile-card__grade">
+												<img src="../images/grade/Level=1.png" alt="grad-img">
+											</div>
+											<div class="profile-card__desc">
+												<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+												<p class="desc__intro">
+													자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+												</p>
+											</div>
+										</div>
+										<div class="profile-card__bottom prov-profile">
+											<img class="prov-profile__img" src="../images/profile-img-640.jpg" alt="prov-img">
+											<span class="prov-profile__name">김김김</span>
+										</div>
+									</div>
+								</a>
+							</div>
+					 
+							<div class="col">
+								<a class="text-decoration-none profile-card-link" href="./provProfile.html">
+									<div class="profile-card background-gradient-1 mx-auto">
+										<div class="profile-card__top">
+											<div class="profile-card__grade">
+												<img src="../images/grade/Level=1.png" alt="grad-img">
+											</div>
+											<div class="profile-card__desc">
+												<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+												<p class="desc__intro">
+													자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+												</p>
+											</div>
+										</div>
+										<div class="profile-card__bottom prov-profile">
+											<img class="prov-profile__img" src="../images/profile-img-640.jpg" alt="prov-img">
+											<span class="prov-profile__name">김김김</span>
+										</div>
+									</div>
+								</a>
+							</div>
+					 
+							<div class="col">
+								<a class="text-decoration-none profile-card-link" href="./provProfile.html">
+									<div class="profile-card background-gradient-1 mx-auto">
+										<div class="profile-card__top">
+											<div class="profile-card__grade">
+												<img src="../images/grade/Level=1.png" alt="grad-img">
+											</div>
+											<div class="profile-card__desc">
+												<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+												<p class="desc__intro">
+													자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+												</p>
+											</div>
+										</div>
+										<div class="profile-card__bottom prov-profile">
+											<img class="prov-profile__img" src="../images/profile-img-640.jpg" alt="prov-img">
+											<span class="prov-profile__name">김김김</span>
+										</div>
+									</div>
+								</a>
+							</div>
+					 
+							<div class="col">
+								<a class="text-decoration-none profile-card-link" href="./provProfile.html">
+									<div class="profile-card background-gradient-1 mx-auto">
+										<div class="profile-card__top">
+											<div class="profile-card__grade">
+												<img src="../images/grade/Level=1.png" alt="grad-img">
+											</div>
+											<div class="profile-card__desc">
+												<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+												<p class="desc__intro">
+													자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+												</p>
+											</div>
+										</div>
+										<div class="profile-card__bottom prov-profile">
+											<img class="prov-profile__img" src="../images/profile-img-640.jpg" alt="prov-img">
+											<span class="prov-profile__name">김김김</span>
+										</div>
+									</div>
+								</a>
+							</div>
+					 
+							<div class="col">
+								<a class="text-decoration-none profile-card-link" href="./provProfile.html">
+									<div class="profile-card background-gradient-1 mx-auto">
+										<div class="profile-card__top">
+											<div class="profile-card__grade">
+												<img src="../images/grade/Level=1.png" alt="grad-img">
+											</div>
+											<div class="profile-card__desc">
+												<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+												<p class="desc__intro">
+													자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+												</p>
+											</div>
+										</div>
+										<div class="profile-card__bottom prov-profile">
+											<img class="prov-profile__img" src="../images/profile-img-640.jpg" alt="prov-img">
+											<span class="prov-profile__name">김김김</span>
+										</div>
+									</div>
+								</a>
+							</div>
+					 
+							<div class="col">
+								<a class="text-decoration-none profile-card-link" href="./provProfile.html">
+									<div class="profile-card background-gradient-1 mx-auto">
+										<div class="profile-card__top">
+											<div class="profile-card__grade">
+												<img src="../images/grade/Level=1.png" alt="grad-img">
+											</div>
+											<div class="profile-card__desc">
+												<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+												<p class="desc__intro">
+													자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+												</p>
+											</div>
+										</div>
+										<div class="profile-card__bottom prov-profile">
+											<img class="prov-profile__img" src="../images/profile-img-640.jpg" alt="prov-img">
+											<span class="prov-profile__name">김김김</span>
+										</div>
+									</div>
+								</a>
+							</div>
+					 
+							<div class="col">
+								<a class="text-decoration-none profile-card-link" href="./provProfile.html">
+									<div class="profile-card background-gradient-1 mx-auto">
+										<div class="profile-card__top">
+											<div class="profile-card__grade">
+												<img src="../images/grade/Level=1.png" alt="grad-img">
+											</div>
+											<div class="profile-card__desc">
+												<h5 class="desc__greeting">Java Spring Boot 백엔드 개발자</h5>
+												<p class="desc__intro">
+													자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+												</p>
+											</div>
+										</div>
+										<div class="profile-card__bottom prov-profile">
+											<img class="prov-profile__img" src="../images/profile-img-640.jpg" alt="prov-img">
+											<span class="prov-profile__name">김김김</span>
+										</div>
+									</div>
+								</a>
+							</div>
+		
+						</div>
+					</div>
+		
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+</html>

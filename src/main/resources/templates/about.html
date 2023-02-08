@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+<link href="/css/howToUse.css" rel="stylesheet">
+</head>
+<body>
+	<div layout:fragment="content">
+		<main>
+			<!-- 섹션1 -->
+			<section>
+				<div class="container-md" style="min-height: 75vh; height: 0;">
+					<div class="row row-cols-1 row-cols-md-2 align-items-center h-100 gx-3 gx-lg-5 p-5 p-lg-0">
+						<div class="col hstack">
+							<div class="w-75 position-relative ms-auto">
+								<img class="position-absolute w-100 top-25 end-50" src="../images/bubble-gum/bubble-gum-searching.gif" alt="searching-gif">
+								<img class="ms-auto w-100" src="../images/window.svg" alt="window-svg">
+							</div>
+						</div>
+						<div class="col">
+							<div class="w-75 mt-5 mt-md-0 mx-auto mx-md-0">
+								<h3>파트너 찾기</h3>
+								<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque nulla enim possimus assumenda doloribus amet temporibus aspernatur.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- 섹션2 -->
+			<section class="vh-100" style="background: linear-gradient(42deg, #ADE7FC 0%, #F9ADDD 100%);">
+				<div class="container-md h-100">
+					<div class="row row-cols-1 row-cols-md-2 align-items-center h-100 gx-3 gx-lg-5 p-5 p-lg-0">
+						<div class="col">
+							<div class="w-75 mt-5 mt-md-0 ms-auto me-auto me-md-0">
+								<h3>프로필 등록하기</h3>
+								<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque nulla enim possimus assumenda doloribus amet temporibus aspernatur.</p>
+							</div>
+						</div>
+						<div class="col hstack">
+							<div class="w-75 position-relative">
+								<div class="profile-card-small background-pattern-3">
+									<div class="profile-card__top"></div>
+									<div class="profile-card__bottom prov-profile"></div>
+								</div>
+								<img class="position-absolute" src="../images/bubble-gum/bubble-gum-web-design.gif" alt="web-gif" style="width: 300px; top: 50%; left: 50%; transform: translate(-20%, -20%) scaleX(-1);">
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- 섹션3 -->
+			<section class="mb-5">
+				<div class="container-md d-flex" style="min-height: 80vh; height: 0;">
+					<div class="row row-cols-1 row-cols-md-2 my-auto">
+						<div class="col hstack">
+							<img class="mx-auto" src="../images/bubble-gum/bubble-gum-message-sent.gif" alt="">
+						</div>
+						<div class="col d-flex flex-column justify-content-center">
+							<div class="w-75 mx-auto mx-md-0">
+								<h3>요청을 보내보세요.</h3>
+								<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Omnis rem sapiente soluta beatae ipsam fugiat nisi nemo vel tempore eum? Quas dolor incidunt aut quaerat eligendi ut saepe voluptatibus deserunt?</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+</html>

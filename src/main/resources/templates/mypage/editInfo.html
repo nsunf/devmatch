@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+<style>
+	.fieldError {
+		color: red;
+	}
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	input[type=number] {
+		-moz-appearance: textfield;
+	}
+</style>
+<script th:inline="javascript">
+	window.onload = () => {
+		const message = [[${errorMessage}]];
+		if (message != null) alert(message);
+
+		const frm = document.frm;
+
+		function confirmPwd() {
+			const pwd = document.getElementById("password");
+			const cfm_pwd = document.getElementById("pw_conf");
+
+			frm.addEventListener("submit", e => {
+				e.preventDefault();
+				if (pwd.value != cfm_pwd.value) {
+					alert("비밀번호가 일치하지 않습니다.");
+				} else {
+					frm.submit();
+				}
+			});
+		}
+		
+		function limitLength(el, length) {
+			el.addEventListener("input", e => {
+				let val = e.target.value;
+				if (el.value.length >= length) {
+					e.preventDefault();
+					e.target.value = val.slice(0, length);
+					focusNext(el);
+				}
+			});
+		}
+		
+		function focusNext(el) {
+			let elements = frm.elements;
+			for (let i = 0; i < elements.length; i++) {
+				if (elements[i] === el && i != elements.length - 1){
+					elements[i + 1].focus();
+				}
+			}
+		}
+		
+		const phone_1 = document.getElementById("phone_1");
+		const phone_2 = document.getElementById("phone_2");
+		const phone_3 = document.getElementById("phone_3");
+
+		phone_1.value = "010";
+
+		confirmPwd();
+		limitLength(phone_1, 3);
+		limitLength(phone_2, 4);
+		limitLength(phone_3, 4);
+
+	};
+</script>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<!-- 메인 내용 -->
+		<div class="col-lg-8">
+
+			<form name="frm" class="row row-cols-1 gy-4 mx-auto px-md-5" th:action="@{/mypage/info}" th:object="${memberFormDto}" method="post" enctype="multipart/form-data">
+				<input type="hidden" th:field="*{id}">
+				<div class="col hstack">
+					<div class="" style="width: 15%">
+						<img id="profile-preview" src="" alt="" onerror="this.src='/images/empty-profile-img.jpg'" width="100%">
+					</div>
+					<div class="ms-3 ms-md-5">
+						<label id="profile-img-label" class="d-block mb-2" for="profile-img">파일을 선택해주세요.</label>
+						<button id="imgChangeBtn" class="btn btn-primary" type="button">change</button>
+						<button id="imgDeleteBtn" class="btn btn-secondary" type="button">delete</button>
+					</div>
+					<input id="profile-img" type="file" name="profile-img" accept="image/*" hidden>
+				</div>
+
+				<div class="col">
+					<label th:for="name" class="form-label">이름</label>
+					<input type="text" class="form-control" th:field="*{name}" readonly>
+				</div>
+
+				<div class="col">
+					<label th:for="email" class="form-label">이메일</label>
+					<input type="text" class="form-control" th:field="*{email}" readonly>
+				</div>
+
+				<div class="col">
+					<label th:for="password" class="form-label">비밀번호</label>
+					<input type="password" class="form-control" th:field="*{password}" placeholder="비밀번호를 입력해주세요." min="8" max="36" required>
+					<div class="invalid-feedback">
+						비밀번호를 입력해주세요.
+					</div>
+				</div>
+
+				<div class="col">
+					<label for="pw_conf" class="form-label">비밀번호 확인</label>
+					<input type="password" class="form-control" id="pw_conf" placeholder="비밀번호를 입력해주세요." min="8" max="36" required>
+					<div class="invalid-feedback">
+						비밀번호를 입력해주세요.
+					</div>
+				</div>
+
+				<div class="col">
+					<label for="phone_1" class="form-label">전화번호</label>
+					<div class="input-group mb-3">
+						<input type="number" class="form-control" th:field="*{phone_1}" placeholder="010" required>
+						<span class="input-group-text bg-primary text-white">-</span>
+						<input type="number" class="form-control" th:field="*{phone_2}" placeholder="0000" required>
+						<span class="input-group-text bg-primary text-white">-</span>
+						<input type="number" class="form-control" th:field="*{phone_3}" placeholder="0000" required>
+					</div>
+					<div class="invalid-feedback">
+						전화번호를 입력해주세요.
+					</div>
+				</div>
+
+				<button class="btn btn-primary w-50 mb-3 mx-auto" type="submit">저장</button>
+			
+			</form>
+		</div>
+	</th:block>
+	<th:block layout:fragment="script-bottom">
+		<script th:src="@{/js/editMyInfo.js}"></script>
+	</th:block>
+</body>
+</html>

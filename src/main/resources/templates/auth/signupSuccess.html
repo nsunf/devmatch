@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+</head>
+<body>
+	<div layout:fragment="content">
+		<main class="vstack" style="min-height: 88vh;">
+			<div class="container my-auto">
+				<!-- 고객 회원가입 성공 페이지 -->
+				<div sec:authorize="hasRole('CUSTOMER')" class="row gy-4">
+					<div class="col-md-4 ms-auto">
+						<div class="text-center text-md-start">
+							<h4>가입을 환영합니다.</h4>
+							<p>나에게 맞는 파트너를 찾아보세요.</p>
+							<a href=""><button class="btn btn-primary">파트너 찾기</button></a>
+						</div>
+					</div>
+					<div class="col-md-4 me-auto">
+						<img src="/images/bubble-gum/bubble-gum-support.gif" alt="request-sent-gif">
+					</div>
+				</div>
+				<!-- 파트너 회원가입 성공 페이지 -->
+				<div sec:authorize="hasRole('PROVIDER')" class="row gy-4">
+					<div class="col-md-4 ms-auto">
+						<div class="text-center text-md-start">
+							<h4>가입을 환영합니다.</h4>
+							<p>파트너 프로필을 등록해보세요.</p>
+							<a href=""><button class="btn btn-primary">프로필 등록하기</button></a>
+						</div>
+					</div>
+					<div class="col-md-4 me-auto">
+						<img src="/images/bubble-gum/bubble-gum-support.gif" alt="request-sent-gif">
+					</div>
+				</div>
+				<div sec:authorize="hasRole('ADMIN')" class="row gy-4">
+					<h2 class="mx-auto">관리자 계정입니다.</h2>
+				</div>
+
+			</div>
+		</main>
+	</div>
+</body>
+</html>

@@ -4,9 +4,9 @@
 	layout:decorate="~{layouts/layout1}">
 <head>
 <title>Insert title here</title>
-<link href="/css/signup.css" rel="stylesheet">
-<link href="/css/global.css" rel="stylesheet">
 <th:block layout:fragment="css">
+	<link href="/css/signup.css" rel="stylesheet">
+	<link href="/css/global.css" rel="stylesheet">
 	<style>
 		.fieldError {
 			color: red;
@@ -15,17 +15,67 @@
 </th:block>
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-		document.onload = () => {
+    window.onload = () => {
+    	const message = [[${errorMessage}]];
+    	if (message != null) alert(message);
+
 			const frm = document.frm;
-			const signupBtn = document.getElementById("signup-btn");
-			const password = document.getElementById("password");
-			const confirmPassword = document.getElementById("signup_pw_conf");
 			
-			frm.addEventListener("click", e => {
-				e.preventDefault();
-				alert('ha')
-			})
+			function checkRole() {
+				const role1 = document.getElementById("role1");
+				role1.checked = true;
+			}
+
+			function confirmPwd() {
+				const pwd = document.getElementById("password");
+				const cfm_pwd = document.getElementById("signup_pw_conf");
+
+				frm.addEventListener("submit", e => {
+					e.preventDefault();
+					if (pwd.value != cfm_pwd.value) {
+						alert("비밀번호가 일치하지 않습니다.");
+					} else {
+						frm.submit();
+					}
+				});
+			}
 			
+			function limitLength(el, length) {
+				el.addEventListener("input", e => {
+					let val = e.target.value;
+					if (el.value.length >= length) {
+						e.preventDefault();
+						e.target.value = val.slice(0, length);
+						focusNext(el);
+					}
+				});
+			}
+			
+			function focusNext(el) {
+				let elements = frm.elements;
+				for (let i = 0; i < elements.length; i++) {
+					if (elements[i] === el && i != elements.length - 1){
+						elements[i + 1].focus();
+					}
+				}
+			}
+			
+			const ssn_1 = document.getElementById("ssn_1");
+			const ssn_2 = document.getElementById("ssn_2");
+			const phone_1 = document.getElementById("phone_1");
+			const phone_2 = document.getElementById("phone_2");
+			const phone_3 = document.getElementById("phone_3");
+
+			phone_1.value = "010";
+			checkRole();
+
+			confirmPwd();
+			limitLength(ssn_1, 6);
+			limitLength(ssn_2, 7);
+			limitLength(phone_1, 3);
+			limitLength(phone_2, 4);
+			limitLength(phone_3, 4);
+
 		};
 	</script>
 </th:block>
@@ -41,7 +91,7 @@
 					<div class="col-10 col-sm-6 col-lg-4 py-5 mx-auto">
 
 						<h2 class="text-center pb-4">회원가입</h2>
-						<form name="frm" class="row row-cols-1 gy-4" action="/auth/signup" method="post" th:object="${memberFormDto}">
+						<form name="frm" class="row row-cols-1 gy-4" th:action="@{/auth/signup}" method="post" th:object="${memberFormDto}">
 							<div class="row row-cols-2 mx-auto">
 								<div class="col">
 									<input type="radio" class="btn-check" th:field="*{role}" value="CUSTOMER" autocomplete="off" required>
@@ -52,17 +102,17 @@
 									<label class="role-btn btn btn-primary w-100" for="role2">파트너</label>
 								</div>
 							 </div>
-							<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p>
+							<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="fieldError">Incorrect Data</p>
 
 							<div class="col">
 								<label th:for="email" class="form-label">이메일</label>
-								<input type="email" class="form-control" th:field="*{email}" placeholder="email@email.com" required>
+								<input type="email" class="form-control" th:field="*{email}" placeholder="email@email.com">
 								<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p>
 							</div>
 			
 							<div class="col">
 								<label th:for="password" class="form-label">비밀번호</label>
-								<input type="password" class="form-control" th:field="*{password}" placeholder="비밀번호를 입력해주세요." min="8" max="36" required>
+								<input type="password" class="form-control" th:field="*{password}" placeholder="비밀번호를 입력해주세요." min="8" max="36">
 								<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect Data</p>
 								<div class="invalid-feedback">
 									비밀번호를 입력해주세요.
@@ -71,7 +121,7 @@
 
 							<div class="col">
 								<label for="signup_pw_conf" class="form-label">비밀번호 확인</label>
-								<input type="password" class="form-control" id="signup_pw_conf" placeholder="비밀번호를 입력해주세요." min="8" max="36" required>
+								<input type="password" class="form-control" id="signup_pw_conf" placeholder="비밀번호를 입력해주세요." min="8" max="36">
 								<div class="invalid-feedback">
 									비밀번호를 입력해주세요.
 								</div>
@@ -81,7 +131,7 @@
 								<div class="row gx-2">
 									<div class="col-6">
 										<label for="last_name" class="form-label">성</label>
-										<input type="text" class="form-control" th:field="*{last_name}" placeholder="성" required>
+										<input type="text" class="form-control" th:field="*{last_name}" placeholder="성">
 										<p th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}" class="fieldError">Incorrect Data</p>
 										<div class="invalid-feedback">
 											이름을 입력해주세요.
@@ -89,7 +139,7 @@
 									</div>
 									<div class="col-6">
 										<label for="fisrt_name" class="form-label">이름</label>
-										<input type="text" class="form-control" th:field="*{first_name}" placeholder="이름" required>
+										<input type="text" class="form-control" th:field="*{first_name}" placeholder="이름">
 										<p th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}" class="fieldError">Incorrect Data</p>
 										<div class="invalid-feedback">
 											이름을 입력해주세요.
@@ -101,9 +151,9 @@
 							<div class="col">
 								<label for="ssn_1" class="form-label">주민번호</label>
 								<div class="input-group mb-3">
-									<input type="number" class="form-control" th:field="*{ssn_1}" placeholder="주민번호 앞자리" required>
+									<input type="number" class="form-control" th:field="*{ssn_1}" placeholder="주민번호 앞자리">
 									<span class="input-group-text bg-primary text-white">-</span>
-									<input type="number" class="form-control" th:field="*{ssn_2}" placeholder="0000000" required>
+									<input type="number" class="form-control" th:field="*{ssn_2}" placeholder="0000000">
 								</div>
 								<p th:if="${#fields.hasErrors('ssn_1')}" th:errors="*{ssn_1}" class="fieldError">Incorrect Data</p>
 								<p th:if="${#fields.hasErrors('ssn_2')}" th:errors="*{ssn_2}" class="fieldError">Incorrect Data</p>
@@ -115,11 +165,11 @@
 							<div class="col">
 								<label for="phone_1" class="form-label">전화번호</label>
 								<div class="input-group mb-3">
-									<input type="number" class="form-control" th:field="*{phone_1}" placeholder="010" required>
+									<input type="number" class="form-control" th:field="*{phone_1}" placeholder="000">
 									<span class="input-group-text bg-primary text-white">-</span>
-									<input type="number" class="form-control" th:field="*{phone_2}" placeholder="0000" required>
+									<input type="number" class="form-control" th:field="*{phone_2}" placeholder="0000">
 									<span class="input-group-text bg-primary text-white">-</span>
-									<input type="number" class="form-control" th:field="*{phone_3}" placeholder="0000" required>
+									<input type="number" class="form-control" th:field="*{phone_3}" placeholder="0000">
 								</div>
 								<p th:if="${#fields.hasErrors('phone_1')}" th:errors="*{phone_1}" class="fieldError">Incorrect Data</p>
 								<p th:if="${#fields.hasErrors('phone_2')}" th:errors="*{phone_2}" class="fieldError">Incorrect Data</p>
@@ -130,8 +180,8 @@
 							</div>
 
 							<button id="signup-btn" class="btn btn-primary w-50 mb-3 mx-auto" type="submit">회원가입</button>
-							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-						</form>
+<!-- 							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+ -->						</form>
 
 					</div>
 				</div>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<!-- 메인 내용 -->
+		<div class="col-lg-8">
+			<div class="row row-cols-3 row-cols-md-4 row-cols-xl-5 row-cols-xxl-6 g-2 g-md-3 g-lg-4 border rounded-3 p-4 pt-0 mt-0">
+
+				<th:block th:each="stack, i : ${stackList}">
+					<div class="col">
+						<div class="card">
+							<img th:src="${stack.imgUrl}" th:alt="${stack.name + '-img'}" style="width: 100%; aspect-ratio: 1/1; object-fit: contain;">
+							<div class="card-body p-0">
+								<div class="text-center" th:text="${stack.name}">angular</div>
+							</div>
+							<div class="card-footer hstack p-0">
+								<button class="btn btn-secondary w-100 rounded-0 delete-stack-btn px-0 px-sm-auto" th:data-stack-id="${stack.id}">삭제</button>
+								<button class="btn btn-primary w-100 rounded-0 edit-stack-btn px-0 px-sm-auto" data-bs-toggle="modal" data-bs-target="#stack-popup" th:data-src="${stack.imgUrl}" th:data-name="${stack.name}" th:data-stack-id="${stack.id}">수정</button>
+							</div>
+						</div>
+					</div>
+					
+				</th:block>
+
+			</div>
+
+			<div class="row mt-4">
+				<div class="col hstack">
+					<button id="add-stack-btn" class="btn btn-primary ms-auto px-5" data-bs-toggle="modal" data-bs-target="#stack-popup">등록</button>
+				</div>
+			</div>
+
+		</div>
+		<!-- 스택 등록 -->
+		<div class="modal fade" id="stack-popup" tabindex="-1" aria-labelledby="stack-label" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="stack-label">스택 등록</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body px-5">
+						<form name="stackForm" class="row row-cols-2" th:action="@{/mypage/stacks/add}" method="post" th:object="${stackFormDto}" enctype="multipart/form-data">
+							<input type="hidden" th:field="*{id}">
+							<label class="col border rounded-2 p-5" style="cursor: pointer;">
+								<img id="stack-img-preview" class="ratio ratio-1x1 w-100" style="object-fit: contain;" src="" alt="" onerror="this.src='/images/add-btn.svg'">
+								<input id="stack-img-input" type="file" name="stackImgFile" accept="image/*" hidden required>
+							</label>
+							<div class="col vstack">
+								<label th:for="name" class="form-label mt-auto">이름</label>
+								<input type="text" class="form-control" th:field="*{name}" placeholder="이름을 입력해주세요." required>
+								<div class="invalid-feedback">
+									이름을 입력해주세요.
+								</div>
+								<button class="btn btn-primary ms-auto mt-4 mb-auto px-3" type="submit">등록</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+	<th:block layout:fragment="script-bottom">
+		<script th:src="@{/js/editStack.js}"></script>
+	</th:block>
+</body>
+</html>

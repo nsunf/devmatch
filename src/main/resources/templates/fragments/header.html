@@ -6,13 +6,13 @@
 </head>
 <body>
 
-	<div th:fragment="header">
+	<th:block th:fragment="header">
 		<header class="header position-relative" style="z-index: 1;">
 			<!-- 네비게이션 -->
 			<nav class="navbar navbar-expand-md bg-white shadow-sm px-xl-5 px-lg-3">
 				<div class="container-fluid">
 					<!-- 로고 -->
-					<a class="navbar-brand" href="/">Logo</a>
+					<a class="navbar-brand" th:href="@{/}">Logo</a>
 					<!-- 모바일 메뉴 버튼 -->
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
@@ -21,33 +21,33 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto">
 							<li class="nav-item">
-								<a class="nav-link" href="./view/findPartner.html">파트너찾기</a>
+								<a class="nav-link" th:href="@{/partners}">파트너찾기</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="./view/portfolios.html">포트폴리오</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="./view/howToUse.html">이용방법</a>
+								<a class="nav-link" th:href="@{/about}">이용방법</a>
 							</li>
 						</ul>
 						<!-- 로그인, 회원가입, 멤버, 로그아웃 -->
 						<hr class="d-md-hidden" />
 						<ul class="navbar-nav align-items-center">
 							<li class="nav-item" sec:authorize="isAnonymous()">
-								<a class="nav-link" href="/auth/login">로그인</a>
+								<a class="nav-link" th:href="@{/auth/login}">로그인</a>
 							</li>
 							<li class="nav-item" sec:authorize="isAnonymous()">
-								<a class="nav-link"href="/auth/signup">회원가입</a>
+								<a class="nav-link" th:href="@{/auth/signup}">회원가입</a>
 							</li>
 							<li class="nav-item mx-2" sec:authorize="isAuthenticated()">
-								<a class="nav-link p-0" href="#">
+								<a class="nav-link p-0" th:href="@{/mypage/dashboard}">
 									<img class="rounded-circle" src="/images/test/profile-img-640.jpg" alt="profile-img" width="32" height="32">
-									<span class="align-middle ps-1">Username</span>
+									<span class="align-middle ps-1" sec:authentication ="name">Username</span>
 								</a>
 							</li>
 							<li class="py-1"></li>
 							<li class="nav-item" sec:authorize="isAuthenticated()">
-								<a class="nav-link text-danger" href="/auth/logout">로그아웃</a>
+								<a class="nav-link text-danger" th:href="@{/auth/logout}">로그아웃</a>
 							</li>
 						</ul>
 					</div>
@@ -55,6 +55,6 @@
 			</nav>
 		</header>
 		
-	</div>
+	</th:block>
 </body>
 </html>

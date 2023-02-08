@@ -5,6 +5,15 @@
 <head>
 <title>Insert title here</title>
 <link href="/css/global.css" rel="stylesheet">
+<th:block layout:fragement="script">
+	<script th:inline="javascript">
+		const message = [[${errorMessage}]];
+		if (message != null) {
+			alert(message);
+			history.back();
+		}
+	</script>
+</th:block>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -19,7 +28,7 @@
 
 							<div class="col">
 								<label for="login_email" class="form-label">이메일</label>
-								<input type="email" class="form-control" id="login_email" name="email" placeholder="이메일을 입력해주세요." required>
+								<input type="email" class="form-control" id="login_email" name="email" placeholder="이메일을 입력해주세요." required autofocus>
 								<div class="invalid-feedback">
 									이메일을 입력해주세요.
 								</div>

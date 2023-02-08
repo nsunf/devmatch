@@ -25,7 +25,6 @@ public class MemberController {
 
 	@GetMapping("/login")
 	public String loginPage() {
-		
 		return "auth/login";
 	}
 	
@@ -46,10 +45,23 @@ public class MemberController {
 		try {
 			this.memberService.signup(memberFormDto, passwordEncoder);
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			model.addAttribute("errorMessage", e.getMessage());
+			return "auth/signup";
 		}
 		
-		return "redirect:/auth/login";
+		memberService.login(memberFormDto);
+		
+		return "redirect:/auth/signup/success";
+	}
+	
+	@GetMapping("/signup/success")
+	public String signupSuccess() {
+		return "auth/signupSuccess";
+	}
+	
+	@GetMapping("/login/error")
+	public String loginError(Model model) {
+		return "auth/login";
 	}
 }

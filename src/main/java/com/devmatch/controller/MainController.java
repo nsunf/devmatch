@@ -10,4 +10,9 @@ public class MainController {
 	public String main() {
 		return "main";
 	}
+	
+	@GetMapping("/about")
+	public String howToUse() {
+		return "about";
+	}
 }

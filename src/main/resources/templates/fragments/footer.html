@@ -5,7 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div th:fragment="footer">
+	<th:block th:fragment="footer">
 		<footer class="footer px-xl-5 px-lg-3 bg-body-tertiary">
 			<div class="container-fluid vstack py-3 text-white" style="height: 160px;">
 		  		<div class="row justify-content-between">
@@ -13,10 +13,10 @@
 					<span class="col-md-6 text-md-end">it's footer and footer</span>
 		  		</div>
 		  		<div class="hstack mt-auto">
-					<span class="ms-auto">Illustration by <a class="text-primary" href="https://icons8.com/illustrations/author/7WmtYU90j36d">Fruzka</a> from <a class="text-primary" href="https://icons8.com/illustrations">Ouch!</a></span>
+					<span class="ms-auto">Illustration by <a class="text-primary" th:href="@{https://icons8.com/illustrations/author/7WmtYU90j36d}">Fruzka</a> from <a class="text-primary" th:href="@{https://icons8.com/illustrations}">Ouch!</a></span>
 		  		</div>
 			</div>
 	  	</footer>
-	</div>
+	</th:block>
 </body>
 </html>
