@@ -9,11 +9,11 @@ function setProfileImg() {
   const fileList = fileInput.files;
     
   if (fileList.length == 0) {
-    imgDeleteBtn.disabled = true;
-    fileInputLabel.innerText = "파일을 선택해주세요.";
+   // imgDeleteBtn.disabled = true;
+   // fileInputLabel.innerText = "파일을 선택해주세요.";
   } else {
-    imgDeleteBtn.disabled = false;
-    fileInputLabel.innerText = fileList[0].name;
+   // imgDeleteBtn.disabled = false;
+   // fileInputLabel.innerText = fileList[0].name;
 
     readURL(fileInput);
   }
@@ -39,6 +39,7 @@ imgChangeBtn.addEventListener("click", () => {
   fileInput.click();
 });
 
+/*
 imgDeleteBtn.addEventListener("click", () => {
   console.log(fileInput.files.length);
   fileInput.value = "";
@@ -46,3 +47,4 @@ imgDeleteBtn.addEventListener("click", () => {
   fileInputLabel.innerText = "파일을 선택해주세요.";
   console.log(fileInput.files.length);
 });
+*/

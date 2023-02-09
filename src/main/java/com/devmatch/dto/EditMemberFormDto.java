@@ -9,10 +9,14 @@ import com.devmatch.entity.Member;
 import com.devmatch.entity.MemberImg;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
 public class EditMemberFormDto {
 	private Long id;
 	

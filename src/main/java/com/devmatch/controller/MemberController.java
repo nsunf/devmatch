@@ -1,5 +1,7 @@
 package com.devmatch.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,12 +26,15 @@ public class MemberController {
 	private final PasswordEncoder passwordEncoder;
 
 	@GetMapping("/login")
-	public String loginPage() {
+	public String loginPage(Principal principal) {
+		System.out.println(principal);
+		if (principal != null) return "redirect:/";
 		return "auth/login";
 	}
 	
 	@GetMapping("/signup")
-	public String signupPage(Model model) {
+	public String signupPage(Model model, Principal principal) {
+		if (principal != null) return "redirect:/";
 		model.addAttribute("memberFormDto", new MemberFormDto());
 		return "auth/signup";
 	}

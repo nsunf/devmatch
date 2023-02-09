@@ -81,17 +81,17 @@
 		<div class="col-lg-8">
 
 			<form name="frm" class="row row-cols-1 gy-4 mx-auto px-md-5" th:action="@{/mypage/info}" th:object="${memberFormDto}" method="post" enctype="multipart/form-data">
-				<input type="hidden" th:field="*{id}">
+				<input type="hidden" th:field="*{id}" th:value="*{id}">
 				<div class="col hstack">
 					<div class="" style="width: 15%">
-						<img id="profile-preview" src="" alt="" onerror="this.src='/images/empty-profile-img.jpg'" width="100%">
+						<img id="profile-preview" th:src="${memberFormDto.memberImgDto.imgUrl}" alt="" onerror="this.src='/images/empty-profile-img.jpg'" width="100%">
 					</div>
 					<div class="ms-3 ms-md-5">
-						<label id="profile-img-label" class="d-block mb-2" for="profile-img">파일을 선택해주세요.</label>
-						<button id="imgChangeBtn" class="btn btn-primary" type="button">change</button>
-						<button id="imgDeleteBtn" class="btn btn-secondary" type="button">delete</button>
-					</div>
-					<input id="profile-img" type="file" name="profile-img" accept="image/*" hidden>
+<!-- 						<label id="profile-img-label" class="d-block mb-2" for="profile-img">파일을 선택해주세요.</label>
+ -->						<button id="imgChangeBtn" class="btn btn-primary" type="button">change</button>
+<!-- 						<button id="imgDeleteBtn" class="btn btn-secondary" type="button">delete</button>
+ -->					</div>
+					<input id="profile-img" type="file" name="profileImgFileList" accept="image/*" hidden>
 				</div>
 
 				<div class="col">

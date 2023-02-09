@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.devmatch.dto.EditMemberFormDto;
+import com.devmatch.dto.ProfileFormDto;
 import com.devmatch.dto.StackFormDto;
+import com.devmatch.entity.Member;
 import com.devmatch.service.MemberService;
+import com.devmatch.service.ProfileService;
 import com.devmatch.service.StackService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ public class MypageController {
 
 	private final MemberService memberService;
 	private final StackService stackService;
+	private final ProfileService profileService;
 	private final PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/dashboard")
@@ -67,16 +71,26 @@ public class MypageController {
 			e.printStackTrace();
 		}
 		
-//		memberService.login(memberFormDto);
-		
 		return "redirect:/mypage/info";
 	}
 	
+//	PROVIDER
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/profile")
+	public String profile(Model model) {
+		Member member = memberService.getMember();
+		ProfileFormDto pfd = profileService.getProfileFormDto(member.getId());
+
+		model.addAttribute("profileFormDto", pfd);
+		return "/mypage/editProfile";
+	}
+	
+//	ADMIN
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/stacks")
 	public String stack(Model model) {
 		model.addAttribute("stackFormDto", new StackFormDto());
-		model.addAttribute("stackList", stackService.getAdminStackList());
+		model.addAttribute("stackList", stackService.getStackDtoList());
 		return "mypage/stackList";
 	}
 	

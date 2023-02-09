@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "stack_image")
+@Table(name = "stack_img")
 @Getter
 @Setter
 public class StackImg extends Image {

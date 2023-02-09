@@ -1,6 +1,6 @@
 package com.devmatch.dto;
 
-import com.querydsl.core.annotations.QueryProjection;
+import com.devmatch.entity.Stack;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,10 +14,9 @@ public class StackDto {
 	
 	private String imgUrl;
 
-	@QueryProjection
-	public StackDto(Long id, String name, String imgUrl) {
-		this.id = id;
-		this.name = name;
-		this.imgUrl = imgUrl;
+	public StackDto(Stack stack) {
+		this.id = stack.getId();
+		this.name = stack.getName();
+		this.imgUrl = stack.getStackImg().getImgUrl();
 	}
 }

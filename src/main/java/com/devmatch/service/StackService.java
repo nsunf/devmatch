@@ -34,8 +34,9 @@ public class StackService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<StackDto> getAdminStackList() {
-		return stackRepo.getAdminStackList();
+	public List<StackDto> getStackDtoList() {
+		List<Stack> stackList = stackRepo.findAll();
+		return stackList.stream().map(StackDto::new).toList();
 	}
 	
 	public void updateStack(StackFormDto stackFormDto, MultipartFile stackImgFile) throws IOException {

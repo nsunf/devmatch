@@ -8,10 +8,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.devmatch.config.CustomUser;
 import com.devmatch.dto.EditMemberFormDto;
 import com.devmatch.dto.MemberDto;
 import com.devmatch.dto.MemberFormDto;
@@ -35,15 +36,33 @@ public class MemberService implements UserDetailsService {
 	private final MemberRepository memberRepo;
 	private final MemberImgService memberImgService;
 	
+	public Member getMember() {
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		Member member = memberRepo.findByEmail(email);
+
+		return member; 
+	}
+	
 	public void login(MemberFormDto memberFormDto) {
+//		List<GrantedAuthority> list = new ArrayList<>();
+//		list.add(new SimpleGrantedAuthority("ROLE_" + memberFormDto.getRole().toString()));
+//
+//		UsernamePasswordAuthenticationToken token = 
+//				new UsernamePasswordAuthenticationToken(
+//						memberFormDto.getEmail(), 
+//						memberFormDto.getPassword(), 
+//						list);
+//
+//		SecurityContextHolder.getContext().setAuthentication(token);
+
 		List<GrantedAuthority> list = new ArrayList<>();
 		list.add(new SimpleGrantedAuthority("ROLE_" + memberFormDto.getRole().toString()));
-
-		UsernamePasswordAuthenticationToken token = 
-				new UsernamePasswordAuthenticationToken(
-						memberFormDto.getEmail(), 
-						memberFormDto.getPassword(), 
-						list);
+		
+		UserDetails userDetails = loadUserByUsername(memberFormDto.getEmail());
+		
+		UsernamePasswordAuthenticationToken token =
+				new UsernamePasswordAuthenticationToken(userDetails, memberFormDto.getPassword(), list);
+		
 		SecurityContextHolder.getContext().setAuthentication(token);
 	}
 	
@@ -73,8 +92,12 @@ public class MemberService implements UserDetailsService {
 			throw new IllegalStateException("이미 가입된 회원입니다.");
 	}
 	
-	public void updateMember(EditMemberFormDto editMemberFormDto, MultipartFile profileImgFile, PasswordEncoder passwordEncoder) throws IOException {
-		Member member = memberRepo.findByEmail(editMemberFormDto.getEmail());
+	public void updateMember(EditMemberFormDto editMemberFormDto, MultipartFile profileImgFile, PasswordEncoder passwordEncoder) throws IOException, UsernameNotFoundException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
+		String email = auth.getName();
+		Member member = memberRepo.findByEmail(email);
+		
+		if (member == null) throw new UsernameNotFoundException(email);
 		
 		editMemberFormDto.updateMember(member, passwordEncoder);
 		
@@ -83,7 +106,10 @@ public class MemberService implements UserDetailsService {
 		memberImg.setMember(member);
 		
 		memberImgService.saveImg(memberImg, profileImgFile);
-		
+
+		UserDetails userDetails = (UserDetails) auth.getPrincipal();
+		CustomUser customUser = (CustomUser) userDetails;
+		customUser.setMemberImgUrl(memberImg.getImgUrl());
 	}
 
 	@Override
@@ -92,10 +118,28 @@ public class MemberService implements UserDetailsService {
 
 		if (member == null) throw new UsernameNotFoundException(email);
 		
-		return User.builder()
-				.username(member.getEmail())
-				.password(member.getPassword())
-				.roles(member.getRole().toString())
-				.build();
+		MemberImg memberImg = memberImgService.getImg(member.getId());
+		
+		CustomUser customUser = new CustomUser();
+		customUser.setUsername(member.getEmail());
+		customUser.setPassword(member.getPassword());
+		customUser.setEnabled(true);
+		customUser.setAccountNonExpired(true);
+		customUser.setAccountNonLocked(true);
+		customUser.setCredentialsNonExpired(true);
+		customUser.setMemberImgUrl(memberImg.getImgUrl());
+		
+		List<GrantedAuthority> authList = new ArrayList<>();
+		authList.add(new SimpleGrantedAuthority("ROLE_" + member.getRole().toString()));
+		
+		customUser.setAuthorities(authList);
+		
+		return customUser;
+		
+//		return User.builder()
+//				.username(member.getEmail())
+//				.password(member.getPassword())
+//				.roles(member.getRole().toString())
+//				.build();
 	}
 }

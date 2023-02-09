@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "profile_image")
+@Table(name = "profile_img")
 @Getter
 @Setter
 public class ProfileImg extends Image {

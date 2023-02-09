@@ -2,6 +2,13 @@ package com.devmatch.dto;
 
 import com.devmatch.entity.MemberImg;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class MemberImgDto {
 	private Long id;
 	

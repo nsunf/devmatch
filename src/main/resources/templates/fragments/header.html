@@ -40,8 +40,8 @@
 								<a class="nav-link" th:href="@{/auth/signup}">회원가입</a>
 							</li>
 							<li class="nav-item mx-2" sec:authorize="isAuthenticated()">
-								<a class="nav-link p-0" th:href="@{/mypage/dashboard}">
-									<img class="rounded-circle" src="/images/test/profile-img-640.jpg" alt="profile-img" width="32" height="32">
+								<a class="nav-link p-0" th:href="@{/mypage/dashboard}" th:with="auth=${#authentication.getPrincipal()}">
+ 									<img class="rounded-circle" th:src="${#strings.isEmpty(auth.getMemberImgUrl()) ? '/images/empty-profile-img.jpg' : auth.getMemberImgUrl()}" alt="profile-img" width="32" height="32" style="object-fit: cover;">
 									<span class="align-middle ps-1" sec:authentication ="name">Username</span>
 								</a>
 							</li>

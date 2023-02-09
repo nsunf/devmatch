@@ -2,6 +2,11 @@ package com.devmatch.dto;
 
 import com.devmatch.entity.StackImg;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class StackImgDto {
 	private Long id;
 	
