@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.devmatch.dto.EditMemberFormDto;
 import com.devmatch.dto.ProfileFormDto;
+import com.devmatch.dto.StackDto;
 import com.devmatch.dto.StackFormDto;
 import com.devmatch.entity.Member;
 import com.devmatch.service.MemberService;
@@ -57,16 +58,11 @@ public class MypageController {
 	@PostMapping("/info")
 	public String updateInfo(@Valid EditMemberFormDto editMemberFormDto, BindingResult bindingResult, List<MultipartFile> profileImgFileList, Model model) {
 		if (bindingResult.hasErrors()) {
-			System.out.println("editMemberFormDto error");
-			bindingResult.getAllErrors().forEach(e -> System.out.println(e));
 			return "mypage/editInfo";
 		}
 		
-		MultipartFile profileImgFile = null;
-		if (profileImgFileList.size() > 0) profileImgFile = profileImgFileList.get(0);
-		
 		try {
-			memberService.updateMember(editMemberFormDto, profileImgFile, passwordEncoder);
+			memberService.updateMember(editMemberFormDto, profileImgFileList.get(0), passwordEncoder);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,10 +75,39 @@ public class MypageController {
 	@GetMapping("/profile")
 	public String profile(Model model) {
 		Member member = memberService.getMember();
-		ProfileFormDto pfd = profileService.getProfileFormDto(member.getId());
+		ProfileFormDto profileFormDto = profileService.getProfileFormDto(member.getId());
+//		List<ProfileStackDto> profileStackDtoList = stackService.getProfileStackDtoList(profileFormDto.getId());
+		List<StackDto> stackDtoList = stackService.getStackDtoListAll();
+		List<Long> checkedStackIdList = stackService.getStackDtoListByProfileId(profileFormDto.getId()).stream().map(StackDto::getId).toList();
+		
+		profileFormDto.setStackIdList(checkedStackIdList);
+//		profileFormDto.setProfileStackDtoList(profileStackDtoList);
 
-		model.addAttribute("profileFormDto", pfd);
-		return "/mypage/editProfile";
+		System.out.println("===> " + profileFormDto);
+		model.addAttribute("profileFormDto", profileFormDto);
+		model.addAttribute("stackDtoList", stackDtoList);
+		return "mypage/editProfile";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@PostMapping("/profile")
+	public String updateProfile(@Valid ProfileFormDto profileFormDto, BindingResult bindingResult, List<MultipartFile> profileImgFileList) {
+		
+		if (bindingResult.hasErrors()) {
+			return "mypage/editProfile";
+		}
+		
+		profileImgFileList.stream().forEach(f -> System.out.println(f.getOriginalFilename()));
+		
+		try {
+			Member member = memberService.getMember();
+			profileService.updateProfile(member, profileFormDto, profileImgFileList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/mypage/dashboard";
+		}
+
+		return "redirect:/mypage/profile";
 	}
 	
 //	ADMIN
@@ -90,7 +115,7 @@ public class MypageController {
 	@GetMapping("/stacks")
 	public String stack(Model model) {
 		model.addAttribute("stackFormDto", new StackFormDto());
-		model.addAttribute("stackList", stackService.getStackDtoList());
+		model.addAttribute("stackList", stackService.getStackDtoListAll());
 		return "mypage/stackList";
 	}
 	

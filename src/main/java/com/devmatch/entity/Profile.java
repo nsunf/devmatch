@@ -16,7 +16,7 @@ public class Profile extends BaseEntity {
 	private Long id;
 	
 	@OneToOne
-	@JoinColumn(name = "member_id")
+	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 	
 	private String title;
@@ -24,4 +24,10 @@ public class Profile extends BaseEntity {
 	private String subTitle;
 
 	private String content;
+	
+	public void update(String title, String subTitle, String content) {
+		this.title = title;
+		this.subTitle = subTitle;
+		this.content = content;
+	}
 }

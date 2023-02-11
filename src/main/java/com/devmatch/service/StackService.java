@@ -13,6 +13,7 @@ import com.devmatch.dto.StackDto;
 import com.devmatch.dto.StackFormDto;
 import com.devmatch.entity.Stack;
 import com.devmatch.entity.StackImg;
+import com.devmatch.repository.ProfileStackRepository;
 import com.devmatch.repository.StackRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,11 @@ import lombok.RequiredArgsConstructor;
 public class StackService {
 	private final StackRepository stackRepo;
 	private final StackImgService stackImgService;
+	private final ProfileStackRepository profileStackRepo;
+	
+	public Stack getStackById(Long stackId) {
+		return stackRepo.findById(stackId).orElseThrow(EntityNotFoundException::new);
+	}
 	
 	public void saveStack(StackFormDto stackFormDto, MultipartFile stackImgFile) throws IOException {
 		Stack stack = stackFormDto.toStack();
@@ -34,9 +40,17 @@ public class StackService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<StackDto> getStackDtoList() {
+	public List<StackDto> getStackDtoListAll() {
 		List<Stack> stackList = stackRepo.findAll();
 		return stackList.stream().map(StackDto::new).toList();
+	}
+	
+//	public List<ProfileStackDto> getProfileStackDtoList(Long profileId) {
+//		return profileStackRepo.findByProfileId(profileId).stream().map(ProfileStackDto::new).toList();
+//	}
+	
+	public List<StackDto> getStackDtoListByProfileId(Long profileId) {
+		return profileStackRepo.findByProfileId(profileId).stream().map(StackDto::new).toList();
 	}
 	
 	public void updateStack(StackFormDto stackFormDto, MultipartFile stackImgFile) throws IOException {

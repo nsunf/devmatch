@@ -1,5 +1,6 @@
 package com.devmatch.dto;
 
+import com.devmatch.entity.ProfileStack;
 import com.devmatch.entity.Stack;
 
 import lombok.Getter;
@@ -18,5 +19,11 @@ public class StackDto {
 		this.id = stack.getId();
 		this.name = stack.getName();
 		this.imgUrl = stack.getStackImg().getImgUrl();
+	}
+	
+	public StackDto(ProfileStack profileStack) {
+		this.id = profileStack.getStack().getId();
+		this.name = profileStack.getStack().getName();
+		this.imgUrl = profileStack.getStack().getStackImg().getImgUrl();
 	}
 }

@@ -8,4 +8,5 @@ import com.devmatch.entity.ProfileImg;
 
 public interface ProfileImgRepository extends JpaRepository<ProfileImg, Long> {
 	List<ProfileImg> findByProfileId(Long profileId);
+	void deleteByProfileId(Long profileId);
 }

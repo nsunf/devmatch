@@ -24,11 +24,11 @@ public class MemberImgService {
 	private final FileService fileService;
 	
 	public void saveImg(MemberImg memberImg, MultipartFile memberImgFile) throws IOException {
-		if (memberImg.getImgName() != null && !memberImg.getImgName().isEmpty()) {
-			fileService.deleteFile(memberImgLocation + "/" + memberImg.getImgName());
-		}
-
 		if (memberImgFile == null || memberImgFile.isEmpty()) return;
+
+			if (memberImg.getImgName() != null && !memberImg.getImgName().isEmpty()) {
+				fileService.deleteFile(memberImgLocation + "/" + memberImg.getImgName());
+			}
 		String oriImgName = memberImgFile.getOriginalFilename();
 		String imgName = "";
 		String imgUrl = "";

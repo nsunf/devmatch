@@ -44,17 +44,6 @@ public class MemberService implements UserDetailsService {
 	}
 	
 	public void login(MemberFormDto memberFormDto) {
-//		List<GrantedAuthority> list = new ArrayList<>();
-//		list.add(new SimpleGrantedAuthority("ROLE_" + memberFormDto.getRole().toString()));
-//
-//		UsernamePasswordAuthenticationToken token = 
-//				new UsernamePasswordAuthenticationToken(
-//						memberFormDto.getEmail(), 
-//						memberFormDto.getPassword(), 
-//						list);
-//
-//		SecurityContextHolder.getContext().setAuthentication(token);
-
 		List<GrantedAuthority> list = new ArrayList<>();
 		list.add(new SimpleGrantedAuthority("ROLE_" + memberFormDto.getRole().toString()));
 		

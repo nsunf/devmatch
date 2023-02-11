@@ -26,11 +26,8 @@ public class StackImgService {
 	
 	public void saveImg(StackImg stackImg, MultipartFile stackImgFile) throws IOException {
 		String oriImgName = stackImgFile.getOriginalFilename();
-		String imgName = "";
-		String imgUrl = "";
-		
-		imgName = fileService.uploadFile(stackImgLocation, oriImgName, stackImgFile.getBytes());
-		imgUrl = "/local/images/stack/" + imgName;
+		String imgName = fileService.uploadFile(stackImgLocation, oriImgName, stackImgFile.getBytes());
+		String imgUrl = "/local/images/stack/" + imgName;
 		
 		stackImg.updateImage(imgName, imgUrl, oriImgName);
 		stackImgRepo.save(stackImg);

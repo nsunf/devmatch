@@ -12,11 +12,11 @@
 	<!-- 메인 내용 -->
 	<div class="col-lg-8">
 
-		<form class="row row-cols-1 gy-4 mx-auto px-md-5" th:action="@{/profile}" th:object="${profileFormDto}" method="post" enctype="multipart/form-data">
+		<form class="row row-cols-1 gy-4 mx-auto px-md-5" th:action="@{/mypage/profile}" th:object="${profileFormDto}" method="post" enctype="multipart/form-data">
 
 			<div class="col">
-				<label for="profile-title" class="form-label">제목</label>
-				<input type="text" class="form-control" id="profile-title" placeholder="제목을 입력해주세요.">
+				<label th:for="id" class="form-label">제목</label>
+				<input type="text" class="form-control" th:field="*{title}" th:value="*{title}" placeholder="제목을 입력해주세요.">
 				<div class="invalid-feedback">
 					이름을 입력해주세요.
 				</div>
@@ -24,75 +24,41 @@
 
 			<div class="col">
 				<p>기술 스택</p>
-				<div class="form-check form-check-inline">
+
+				<div class="form-check form-check-inline" th:each="stack : ${stackDtoList}">
+					<label class="form-check-label">
+						<input class="form-check-input" name="stackIdList" type="checkbox" th:value="${stack.id}" th:checked="${#lists.contains(profileFormDto.stackIdList, stack.id) ? 'checked' : null}">
+						[[${stack.name}]]
+					</label>
+				</div>
+
+<!-- 				<div class="form-check form-check-inline">
 					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-1">
 					<label class="form-check-label" for="stack-1">stack-1</label>
 				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-2">
-					<label class="form-check-label" for="stack-2">stack-2</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-3">
-					<label class="form-check-label" for="stack-3">stack-3</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-4">
-					<label class="form-check-label" for="stack-4">stack-4</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-5">
-					<label class="form-check-label" for="stack-5">stack-5</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-6">
-					<label class="form-check-label" for="stack-6">stack-6</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-7">
-					<label class="form-check-label" for="stack-7">stack-7</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-8">
-					<label class="form-check-label" for="stack-8">stack-8</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-9">
-					<label class="form-check-label" for="stack-9">stack-9</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="stack" type="checkbox" value="stack" id="stack-10">
-					<label class="form-check-label" for="stack-10">stack-10</label>
+ -->			</div>
+
+			<div class="col">
+				<div class="form-floating">
+					<textarea class="form-control" placeholder="Leave a comment here" th:field="*{subTitle}" style="height: 10vh;" required></textarea>
+					<label th:for="subTitle">짧은소개</label>
 				</div>
 			</div>
 
 			<div class="col">
 				<div class="form-floating">
-					<textarea class="form-control" placeholder="Leave a comment here" id="profile-short" style="height: 10vh;" required></textarea>
-					<label for="profile-short">짧은소개</label>
-				</div>
-			</div>
-
-			<div class="col">
-				<div class="form-floating">
-					<textarea class="form-control" placeholder="Leave a comment here" id="profile-content" style="height: 25vh;" required></textarea>
-					<label for="profile-content">상세내용</label>
+					<textarea class="form-control" placeholder="Leave a comment here" th:field="*{content}" style="height: 25vh;" required></textarea>
+					<label th:for="content">상세내용</label>
 				</div>
 			</div>
 
 			<div class="col">
 				<p>이미지</p>
-				<input id="images-input" class="mb-3" type="file" accept="image/*" multiple>
+				<input id="images-input" name="profileImgFileList" class="mb-3" type="file" accept="image/*" multiple>
 				<div id="images-preview" class="row">
-					<!-- <div class="col-3">
-						<img class="w-100" src="../images/long-img-1.jpg" alt="">
+					<div class="col-3" th:each="profileImg : *{profileImgDtoList}">
+						<img class="w-100" th:src="@{${profileImg.imgUrl}}" alt="">
 					</div>
-					<div class="col-3">
-						<img class="w-100" src="../images/long-img-2.jpg" alt="">
-					</div>
-					<div class="col-3">
-						<img class="w-100" src="../images/long-img-3.jpg" alt="">
-					</div> -->
 				</div>
 			</div>
 
