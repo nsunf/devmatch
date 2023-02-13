@@ -5,10 +5,12 @@ import java.time.format.DateTimeFormatter;
 import com.devmatch.entity.Member;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class MemberDto {
 	private Long id;
 	
@@ -17,6 +19,8 @@ public class MemberDto {
 	private String name;
 	
 	private String regDate;
+	
+	private String imgUrl;
 	
 	public MemberDto(Member member) {
 		this.id = member.getId();

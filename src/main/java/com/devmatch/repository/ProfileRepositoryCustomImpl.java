@@ -9,11 +9,18 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import com.devmatch.dto.ProfileCardDto;
+import com.devmatch.dto.ProfileDto;
 import com.devmatch.dto.QProfileCardDto;
+import com.devmatch.dto.QProfileDto;
 import com.devmatch.entity.QMember;
 import com.devmatch.entity.QMemberImg;
 import com.devmatch.entity.QProfile;
+import com.devmatch.entity.QProfileStack;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -23,6 +30,25 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 	
 	public ProfileRepositoryCustomImpl(EntityManager em) {
 		this.qf = new JPAQueryFactory(em);
+	}
+	
+	public BooleanExpression containName(String searchQuery) {
+		return QMember.member.last_name.append(QMember.member.first_name).contains(searchQuery);
+	}
+	
+	public BooleanExpression inStackIdList(QProfile profile, List<Long> stackIdList) {
+		QProfileStack profileStack = QProfileStack.profileStack;
+		JPAQuery<Long> profileStackIdList = qf.select(profileStack.stack.id).from(profileStack).where(profileStack.profile.eq(profile));
+		
+		BooleanExpression result = null;
+		for (int i = 0; i < stackIdList.size(); i++) {
+			if (i == 0)
+				result = profileStackIdList.contains(stackIdList.get(i));
+			else
+				result = result.or(profileStackIdList.contains(stackIdList.get(i)));
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -36,19 +62,15 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 				.from(profile)
 				.join(profile.member, member)
 				.leftJoin(memberImg)
-				.on(memberImg.member.eq(member))
-				.orderBy(profile.updateTime.desc())
-				.offset(pageable.getOffset())
-				.limit(pageable.getPageSize());
+				.on(memberImg.member.eq(member));
 		
+		if (searchQuery != null)
+			q.where(containName(searchQuery));
+	
+		if (stackIdList != null)
+			q.where(inStackIdList(profile, stackIdList));
 		
-
-		List<ProfileCardDto> contents = qf
-				.select(new QProfileCardDto(profile.id, member.first_name, member.last_name, memberImg.imgUrl, profile.title, profile.subTitle))
-				.from(profile)
-				.join(profile.member, member)
-				.leftJoin(memberImg)
-				.on(memberImg.member.eq(member))
+		List<ProfileCardDto> contents = q
 				.orderBy(profile.updateTime.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
@@ -59,4 +81,21 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 		return new PageImpl<>(contents, pageable, total);
 	}
 
+	@Override
+	public ProfileDto getProfileDto(Long profileId) {
+		QProfile profile = QProfile.profile;
+		QMember member = QMember.member;
+		QMemberImg memberImg = QMemberImg.memberImg;
+		
+		ProfileDto result = qf.
+				select(new QProfileDto(profile.id, profile.title, profile.subTitle, profile.content, member.id, member.email, member.first_name, member.last_name, memberImg.imgUrl))
+				.from(profile)
+				.join(profile.member, member)
+				.leftJoin(memberImg)
+				.on(memberImg.member.eq(member))
+				.where(profile.id.eq(profileId))
+				.fetchOne();
+		
+		return result;
+	}
 }

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+<link href="/css/findPartner.css" rel="stylesheet">
+</head>
+<body>
+<th:block layout:fragment="content" th:object="${profileDto}">
+	<!-- 탑 -->
+	<section class="mt-5">
+		<div class="container-md">
+			<div class="row justify-content-center gy-4 gy-lg-0">
+				<!-- 프로필 카드 -->
+				<div class="col-12 col-lg-4">
+					<div class="profile-card background-gradient-1 mx-auto">
+						<div class="profile-card__top">
+							<div class="profile-card__grade">
+								<img src="../images/grade/Level=1.png" alt="grad-img">
+							</div>
+							<div class="profile-card__desc">
+								<h5 class="desc__greeting" th:text="*{title}">Java Spring Boot 백엔드 개발자</h5>
+								<p class="desc__intro" th:text="*{subTitle}">
+									자기만의 웹사이트, 기업 관리시스템 등 다양한 서비스를 만들어드립니다.
+								</p>
+							</div>
+						</div>
+						<div class="profile-card__bottom prov-profile">
+							<img class="prov-profile__img" th:src="@{*{member.imgUrl}}" alt="prov-img">
+							<span class="prov-profile__name" th:text="*{member.name}">김김김</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-lg-2 hstack">
+					<a class="mt-auto ms-auto ms-lg-0" href="./sendRequest.html">
+						<button class="btn btn-primary px-4">요청 작성</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<hr class="container-md">
+	<!-- 프로필 내용 -->
+	<section>
+		<div class="container-md">
+			<div class="row">
+				<!-- 스크롤 -->
+				<div class="col-2 d-none d-xl-block">
+					<nav id="scroll-nav" class="flex-column align-items-stretch pe-4 border-end py-4 sticky-top">
+						<nav class="nav nav-pills flex-column border rounded-3 p-2">
+							<a class="nav-link" href="#stack">기술스택</a>
+							<a class="nav-link" href="#intro">소개</a>
+							<a class="nav-link" href="#images">이미지</a>
+							<a class="nav-link" href="#portfolio">포트폴리오</a>
+							<a class="nav-link" href="#comment">평가</a>
+						</nav>
+					</nav>
+				</div>
+				<!-- 메인영역 -->
+				<div class="col-12 col-md-10 col-xl-8 mx-auto mx-xl-0 mb-4">
+					<!-- 스택 -->
+					<div id="stack" class="overflow-x-auto">
+						<div class="d-flex align-items-center gap-5 py-2 mx-5">
+							<img class="stack-logo" th:each="stack: *{stackDtoList}" th:src="@{${stack.imgUrl}}" th:alt="${stack.imgUrl + '-img'}" style="width: 64px;">
+						</div>
+					</div>
+					<hr>
+					<!-- 프로필 설명 -->
+					<div id="intro" class="py-2" th:text="*{content}">
+						<p>
+							* Et nunc nunc interdum integer quam ut.<br/>
+							Lorem lacus sapien eget faucibus aenean et urna commodo integer.<br/>
+							Tempor cursus ultricies eget massa. Viverra netus nulla amet viverra mauris consectetur risus elit tempor.<br/>
+							Nulla dui sed vulputate nibh amet sit. Duis ultrices et vitae ac ac nullam.<br/>
+							<br/>
+							* Tristique consequat turpis cras pulvinar sagittis tellus.<br/>
+							Lobortis condimentum et augue amet iaculis. Volutpat sit et elementum mi molestie auctor. Egestas faucibus arcu urna adipiscing commodo vulputate suscipit vivamus nisl. Amet lorem sed at egestas orci at. Diam ultricies tincidunt mi elit vulputate enim.<br/>
+							<br/>
+							* Vitae enim sodales at quam vel sed diam metus.<br/>
+							Vel quis lorem et pretium integer vitae convallis ac orci. Dictum suspendisse vivamus venenatis nisl elit pharetra. Volutpat cras tempus elementum dignissim et accumsan. Et sem erat enim velit enim blandit. Convallis a id sit eu viverra scelerisque suspendisse sit.<br/>
+						</p>
+					</div>
+					<hr>
+					<!-- 이미지 -->
+					<div id="images" class="row">
+						<div class="col-12" th:each="profileImgDto: *{profileImgDtoList}">
+							<img class="w-100" th:src="@{${profileImgDto.imgUrl}}" alt="">
+						</div>
+						<div class="col-12">
+							<img class="w-100" src="../images/profile-info/profile-info-2.jpg" alt="">
+						</div>
+						<div class="col-12">
+							<img class="w-100" src="../images/profile-info/profile-info-3.jpg" alt="">
+						</div>
+						<div class="col-12">
+							<img class="w-100" src="../images/profile-info/profile-info-4.jpg" alt="">
+						</div>
+					</div>
+					<hr>
+					<!-- 포트폴리오 -->
+					<div id="portfolio" class="row g-2">
+						<div class="col-12 hstack">
+							<a class="ms-auto mb-2" href="./portfolios.html">더보기</a>
+						</div>
+
+						<div class="col-6 col-sm-3">
+							<div class="card rounded-2 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
+								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
+									<p class="card-text fs-5">portfolio-title</p>
+									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 col-sm-3">
+							<div class="card rounded-2 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
+								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
+									<p class="card-text fs-5">portfolio-title</p>
+									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card rounded-2 p-0 overflow-hidden portfolio-card d-none d-sm-block" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
+								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
+									<p class="card-text fs-5">portfolio-title</p>
+									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="card rounded-2 p-0 overflow-hidden portfolio-card d-none d-sm-block" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
+								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
+									<p class="card-text fs-5">portfolio-title</p>
+									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- 포트폴리오 상세 -->
+						<div class="modal fade" id="portfolio-popup" tabindex="-1" aria-hidden="true" aria-labelledby="modalLabel">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header hstack">
+										<h3 class="modal-title" id="moalLabel">Portfolio title</h3>
+										<div class="ms-auto">
+											yyyy/mm/dd
+										</div>
+										<button type="button" class="btn-close ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>
+											* Et nunc nunc interdum integer quam ut.<br/>
+											Lorem lacus sapien eget faucibus aenean et urna commodo integer.<br/>
+											Tempor cursus ultricies eget massa. Viverra netus nulla amet viverra mauris consectetur risus elit tempor.<br/>
+											Nulla dui sed vulputate nibh amet sit. Duis ultrices et vitae ac ac nullam.<br/>
+											<br/>
+											* Tristique consequat turpis cras pulvinar sagittis tellus.<br/>
+											Lobortis condimentum et augue amet iaculis. Volutpat sit et elementum mi molestie auctor. Egestas faucibus arcu urna adipiscing commodo vulputate suscipit vivamus nisl. Amet lorem sed at egestas orci at. Diam ultricies tincidunt mi elit vulputate enim.<br/>
+											<br/>
+											* Vitae enim sodales at quam vel sed diam metus.<br/>
+											Vel quis lorem et pretium integer vitae convallis ac orci. Dictum suspendisse vivamus venenatis nisl elit pharetra. Volutpat cras tempus elementum dignissim et accumsan. Et sem erat enim velit enim blandit. Convallis a id sit eu viverra scelerisque suspendisse sit.<br/>
+										</p>
+										<hr/>
+										<div class="row">
+											<div class="col-12">
+												<img src="../images/long-img-1.jpg" alt="portfolio-img-1" width="100%">
+											</div>
+											<div class="col-12">
+												<img src="../images/long-img-2.jpg" alt="portfolio-img-2" width="100%">
+											</div>
+											<div class="col-12">
+												<img src="../images/long-img-3.jpg" alt="portfolio-img-3" width="100%">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<hr>
+					<!-- 댓글 -->
+					<div id="comment" class="d-flex flex-column gap-3">
+
+						<div class="card">
+							<div class="card-header hstack">
+								<div class="hstack">
+									<img class="rounded-circle" src="../images/profile-img-640.jpg" alt="" width="40px" height="40px">
+									<span class="ms-2">anonymous</span>
+								</div>
+								<div class="ms-auto">
+									<div class="star-group rate-3-half">
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<blockquote class="blockquote vstack mb-0">
+									<p class="fs-6 mb-1">Sit diam dolor a sit auctor blandit fames. Gravida ut amet orci ullamcorper.</p>
+									<span class="fs-6 fw-light text-muted ms-auto">yyyy-mm-dd</span>
+								</blockquote>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-header hstack">
+								<div class="hstack">
+									<img class="rounded-circle" src="../images/profile-img-640.jpg" alt="" width="40px" height="40px">
+									<span class="ms-2">anonymous</span>
+								</div>
+								<div class="ms-auto">
+									<div class="star-group rate-2">
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<blockquote class="blockquote vstack mb-0">
+									<p class="fs-6 mb-1">Sit diam dolor a sit auctor blandit fames. Gravida ut amet orci ullamcorper.</p>
+									<span class="fs-6 fw-light text-muted ms-auto">yyyy-mm-dd</span>
+								</blockquote>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-header hstack">
+								<div class="hstack">
+									<img class="rounded-circle" src="../images/profile-img-640.jpg" alt="" width="40px" height="40px">
+									<span class="ms-2">anonymous</span>
+								</div>
+								<div class="ms-auto">
+									<div class="star-group rate-half">
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+										<div class="star"></div>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<blockquote class="blockquote vstack mb-0">
+									<p class="fs-6 mb-1">Sit diam dolor a sit auctor blandit fames. Gravida ut amet orci ullamcorper.</p>
+									<span class="fs-6 fw-light text-muted ms-auto">yyyy-mm-dd</span>
+								</blockquote>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</th:block>
+<th:block layout:fragment="script-bottom">
+	<script th:src="@{/js/customModal.js}"></script>
+</th:block>
+</body>
+</html>

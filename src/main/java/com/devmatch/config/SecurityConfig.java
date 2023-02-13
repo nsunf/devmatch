@@ -33,8 +33,8 @@ public class SecurityConfig {
 
 
 		http.authorizeRequests()
-			.mvcMatchers("/css/**", "/js/**", "/images/**", "/lib/**").permitAll()
-			.mvcMatchers("/", "/about").permitAll()
+			.mvcMatchers("/css/**", "/js/**", "/local/images/**", "/images/**", "/lib/**").permitAll()
+			.mvcMatchers("/", "/about", "/partners/**").permitAll()
 			.mvcMatchers("/auth/signup", "/auth/login").anonymous()
 			.anyRequest().authenticated();
 

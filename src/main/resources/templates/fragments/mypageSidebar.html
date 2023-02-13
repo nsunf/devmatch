@@ -20,7 +20,7 @@
 					<a class="nav-link"  th:classappend="${path == '/mypage/requests' ? 'active' : null}" th:aria-current="${path == '/mypage/requests' ? 'page' : null}" th:href="@{/mypage/requests}">요청 내역</a>
 					<a class="nav-link" th:classappend="${path == '/mypage/info' ? 'active' : null}" th:aria-current="${path == '/mypage/info' ? 'page' : null}" th:href="@{/mypage/info}">개인정보 변경</a>
 					<a class="nav-link" th:classappend="${path == '/mypage/profile' ? 'active' : null}" th:aria-current="${path == '/mypage/profile' ? 'page' : null}" th:href="@{/mypage/profile}">프로필 수정</a>
-					<a class="nav-link" th:classappend="${path == '/mypage/portfolios' ? 'active' : null}" th:aria-current="${path == '/mypage/portfolios' ? 'page' : null}" th:href="@{/mypage/portfolios}">포트폴리오 수정</a>
+					<a class="nav-link" th:classappend="${(path == '/mypage/portfolios' || #strings.contains(path, '/mypage/portfolios/edit')) ? 'active' : null}" th:aria-current="${(path == '/mypage/portfolios' || #strings.contains(path, '/mypage/portfolios/edit')) ? 'page' : null}" th:href="@{/mypage/portfolios}">포트폴리오 수정</a>
 				</nav>
 				<!-- 관리자 -->
 				<nav sec:authorize="hasRole('ADMIN')" class="nav nav-pills row row-cols-2 row-cols-sm-3 row-cols-lg-1">

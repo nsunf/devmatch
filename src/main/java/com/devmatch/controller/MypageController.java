@@ -2,27 +2,36 @@ package com.devmatch.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.devmatch.dto.EditMemberFormDto;
+import com.devmatch.dto.PortfolioDto;
+import com.devmatch.dto.PortfolioFormDto;
 import com.devmatch.dto.ProfileFormDto;
 import com.devmatch.dto.StackDto;
 import com.devmatch.dto.StackFormDto;
 import com.devmatch.entity.Member;
 import com.devmatch.service.MemberService;
+import com.devmatch.service.PortfolioService;
 import com.devmatch.service.ProfileService;
 import com.devmatch.service.StackService;
 
@@ -36,6 +45,8 @@ public class MypageController {
 	private final MemberService memberService;
 	private final StackService stackService;
 	private final ProfileService profileService;
+	private final PortfolioService portfolioService;
+
 	private final PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/dashboard")
@@ -97,8 +108,6 @@ public class MypageController {
 			return "mypage/editProfile";
 		}
 		
-		profileImgFileList.stream().forEach(f -> System.out.println(f.getOriginalFilename()));
-		
 		try {
 			Member member = memberService.getMember();
 			profileService.updateProfile(member, profileFormDto, profileImgFileList);
@@ -109,6 +118,67 @@ public class MypageController {
 
 		return "redirect:/mypage/profile";
 	}
+	
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/portfolios")
+	public String portfolios(Model model) {
+		model.addAttribute("portfolioDtoList", portfolioService.getPortfolioList());
+
+		return "mypage/editPortfolioList";
+	}
+
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/portfolios/load/{portfolioId}")
+	public @ResponseBody ResponseEntity<?> portfolioDetail(@PathVariable Long portfolioId) {
+		PortfolioDto portfolioDto = portfolioService.getPortfolio(portfolioId);
+		
+		Map<String, PortfolioDto> map = new HashMap<>();
+		map.put("result", portfolioDto);
+		
+		return new ResponseEntity<Map<String, PortfolioDto>>(map, HttpStatus.OK);
+	}
+	
+	
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/portfolios/edit")
+	public String editPortfolio(Model model) {
+		if (!profileService.isExist()) {
+			model.addAttribute("errorMessage", "프로필을 먼저 등록해주세요.");
+		}
+		
+		model.addAttribute("portfolioDto", new PortfolioDto());
+		return "mypage/editPortfolio";
+	}
+
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@PostMapping("/portfolios/edit")
+	public String updatePortfolio(PortfolioFormDto portfolioFormDto, List<MultipartFile> portfolioImgFileList, Model model) {
+		try {
+			portfolioService.savePortfolio(portfolioFormDto, portfolioImgFileList);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/mypage/portfolios";
+	}
+
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/portfolios/edit/{portfolioId}")
+	public String editPortfolioById(@PathVariable Long portfolioId, Model model) {
+		PortfolioDto portfolioDto = portfolioService.getPortfolio(portfolioId);
+		
+		model.addAttribute("portfolioDto", portfolioDto);
+		return "mypage/editPortfolio";
+	}
+
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/portfolios/delete/{portfolioId}")
+	public String deletePortfolioById(@PathVariable Long portfolioId, Model model) {
+		portfolioService.deletePortfolio(portfolioId);
+
+		return "redirect:/mypage/portfolios";
+	}
+	
 	
 //	ADMIN
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

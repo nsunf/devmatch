@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+</head>
+<body>
+<th:block layout:fragment="content">
+	<!-- 메인 내용 -->
+	<div class="col-lg-9">
+		<div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-2 g-xxl-4">
+
+			<div class="col portfolio" th:each="portfolioDto, status: ${portfolioDtoList}" th:data-id="${portfolioDto.id}">
+				<div class="card rounded-4 p-0 overflow-hidden portfolio-card" th:with="imgUrlList=${portfolioDto.imgUrlList}">
+					<img th:src="${imgUrlList.size > 0 ? imgUrlList[0] : null}" class="card-img-top" th:alt="${'portfolio' + status.index + '-img'}"  data-bs-toggle="modal" data-bs-target="#portfolio-popup" style="width: 100%; aspect-ratio: 1/1; object-fit: cover;">
+					<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;"  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+						<p class="card-text fs-5" th:text="${portfolioDto.title}" style="text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;">portfolio-title</p>
+						<p class="card-text d-none d-xl-block" th:text="${portfolioDto.regDate}">yyyy/mm/dd</p>
+					</div>
+					<div class="card-footer p-0">
+						<a th:href="'/mypage/portfolios/edit/' + ${portfolioDto.id}">
+							<button class="btn btn-primary rounded-0 w-100">수정</button>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- <div class="col">
+				<div class="card rounded-4 p-0 overflow-hidden portfolio-card">
+					<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="..."  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+					<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;"  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+						<p class="card-text fs-5">portfolio-title</p>
+						<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+					</div>
+					<div class="card-footer p-0">
+						<a href="./editPortfolio.html">
+							<button class="btn btn-primary rounded-0 w-100">수정</button>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="card rounded-4 p-0 overflow-hidden portfolio-card">
+					<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="..."  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+					<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;"  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+						<p class="card-text fs-5">portfolio-title</p>
+						<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+					</div>
+					<div class="card-footer p-0">
+						<a href="./editPortfolio.html">
+							<button class="btn btn-primary rounded-0 w-100">수정</button>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="card rounded-4 p-0 overflow-hidden portfolio-card">
+					<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="..."  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+					<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;"  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+						<p class="card-text fs-5">portfolio-title</p>
+						<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+					</div>
+					<div class="card-footer p-0">
+						<a href="./editPortfolio.html">
+							<button class="btn btn-primary rounded-0 w-100">수정</button>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="card rounded-4 p-0 overflow-hidden portfolio-card">
+					<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="..."  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+					<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;"  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+						<p class="card-text fs-5">portfolio-title</p>
+						<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+					</div>
+					<div class="card-footer p-0">
+						<a href="./editPortfolio.html">
+							<button class="btn btn-primary rounded-0 w-100">수정</button>
+						</a>
+					</div>
+				</div>
+			</div> -->
+
+		</div>
+
+		<div class="row my-4">
+			<div class="col hstack">
+				<a class="ms-auto" href="/mypage/portfolios/edit">
+					<button id="regist-btn" class="btn btn-primary px-5 py-1">등록</button>
+				</a>
+			</div>
+		</div>
+
+<!-- 		<div class="row">
+			<nav class="col hstack" aria-label="Page navigation example">
+				<ul class="pagination mx-auto">
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li class="page-item active"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+ -->		
+		<!-- 포트폴리오 상세 -->
+		<div class="modal fade" id="portfolio-popup" tabindex="-1" aria-hidden="true" aria-labelledby="modalLabel">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header hstack">
+						<h3 class="modal-title" id="modalLabel">Portfolio title</h3>
+						<div id="modalRegDate" class="ms-auto">
+							yyyy/mm/dd
+						</div>
+						<button type="button" class="btn-close ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p id="modalContent">
+							* Et nunc nunc interdum integer quam ut.<br/>
+							Lorem lacus sapien eget faucibus aenean et urna commodo integer.<br/>
+							Tempor cursus ultricies eget massa. Viverra netus nulla amet viverra mauris consectetur risus elit tempor.<br/>
+							Nulla dui sed vulputate nibh amet sit. Duis ultrices et vitae ac ac nullam.<br/>
+							<br/>
+							* Tristique consequat turpis cras pulvinar sagittis tellus.<br/>
+							Lobortis condimentum et augue amet iaculis. Volutpat sit et elementum mi molestie auctor. Egestas faucibus arcu urna adipiscing commodo vulputate suscipit vivamus nisl. Amet lorem sed at egestas orci at. Diam ultricies tincidunt mi elit vulputate enim.<br/>
+							<br/>
+							* Vitae enim sodales at quam vel sed diam metus.<br/>
+							Vel quis lorem et pretium integer vitae convallis ac orci. Dictum suspendisse vivamus venenatis nisl elit pharetra. Volutpat cras tempus elementum dignissim et accumsan. Et sem erat enim velit enim blandit. Convallis a id sit eu viverra scelerisque suspendisse sit.<br/>
+						</p>
+						<hr/>
+						<div id="modalImgs" class="row">
+<!-- 							<div class="col-12">
+								<img src="../images/long-img-1.jpg" alt="portfolio-img-1" width="100%">
+							</div>
+							<div class="col-12">
+								<img src="../images/long-img-2.jpg" alt="portfolio-img-2" width="100%">
+							</div>
+							<div class="col-12">
+								<img src="../images/long-img-3.jpg" alt="portfolio-img-3" width="100%">
+							</div>
+ -->						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</th:block>
+<th:block layout:fragment="script-bottom">
+	<script th:src="@{/js/customModal.js}"></script>
+	<script th:src="@{/js/editPortfolioList.js}"></script>
+</th:block>
+</body>
+</html>

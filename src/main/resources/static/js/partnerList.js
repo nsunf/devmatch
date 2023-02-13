@@ -41,6 +41,8 @@ function loadProfileList() {
   else
     reqUrl += query + "&page=" + pageCount++;
 
+  console.log("--> " + reqUrl);
+
   fetch(reqUrl, {
   }).then(res => res.json())
   .then(data => {
@@ -69,7 +71,7 @@ function appendProfile(profileCardDto) {
   const col = document.createElement("div");
   col.classList.add("col");
   col.innerHTML = `
-    <a class="text-decoration-none profile-card-link" href="${''}">
+    <a class="text-decoration-none profile-card-link" href="${'/partners/' + profileCardDto.profileId}">
       <div class="profile-card background-gradient-1 mx-auto">
         <div class="profile-card__top">
           <div class="profile-card__grade">
