@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -62,8 +63,13 @@ public class MemberService implements UserDetailsService {
 		memberRepo.save(member);
 	}
 	
-	public MemberDto getMemberDto(String email) {
+	public MemberDto getMemberDtoByEmail(String email) {
 		Member member = memberRepo.findByEmail(email);
+		return new MemberDto(member);
+	}
+
+	public MemberDto getMemberDtoById(Long id) {
+		Member member = memberRepo.findById(id).orElseThrow(EntityNotFoundException::new);
 		return new MemberDto(member);
 	}
 	

@@ -9,6 +9,7 @@
 </head>
 <body>
 <th:block layout:fragment="content" th:object="${profileDto}">
+<main>
 	<!-- 탑 -->
 	<section class="mt-5">
 		<div class="container-md">
@@ -102,62 +103,33 @@
 					<!-- 포트폴리오 -->
 					<div id="portfolio" class="row g-2">
 						<div class="col-12 hstack">
-							<a class="ms-auto mb-2" href="./portfolios.html">더보기</a>
+							<a class="ms-auto mb-2" th:href="@{'/portfolios?searchQuery=' + ${profileDto.member.name} }">더보기</a>
 						</div>
-
-						<div class="col-6 col-sm-3">
-							<div class="card rounded-2 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
+						
+						<div class="portfolio col-6 col-sm-3" th:each="portfolio, status: ${portfolioDtoList}" th:data-id="${portfolio.id}">
+							<div class="card rounded-2 p-0 overflow-hidden portfolio-card" th:classappend="${status.index >= 2} ? 'd-none d-sm-block' : null" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
+								<img th:src="@{${portfolio.imgUrlList.size > 0 ? portfolio.imgUrlList[0] : '/images/no-img.png'}}" class="card-img-top" alt="portfolio-img" style="width: 100%; aspect-ratio: 1/1; object-fit: cover;">
 								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-									<p class="card-text fs-5">portfolio-title</p>
-									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
+									<p class="card-text fs-5" th:text="${portfolio.title}" style="text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;">portfolio-title</p>
+									<p class="card-text d-none d-xl-block" th:text="${portfolio.regDate}">yyyy/mm/dd</p>
 								</div>
 							</div>
 						</div>
-
-						<div class="col-6 col-sm-3">
-							<div class="card rounded-2 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-									<p class="card-text fs-5">portfolio-title</p>
-									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col">
-							<div class="card rounded-2 p-0 overflow-hidden portfolio-card d-none d-sm-block" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-									<p class="card-text fs-5">portfolio-title</p>
-									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col">
-							<div class="card rounded-2 p-0 overflow-hidden portfolio-card d-none d-sm-block" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-								<img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-								<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-									<p class="card-text fs-5">portfolio-title</p>
-									<p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-								</div>
-							</div>
-						</div>
+						
 
 						<!-- 포트폴리오 상세 -->
 						<div class="modal fade" id="portfolio-popup" tabindex="-1" aria-hidden="true" aria-labelledby="modalLabel">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<div class="modal-header hstack">
-										<h3 class="modal-title" id="moalLabel">Portfolio title</h3>
-										<div class="ms-auto">
+										<h3 class="modal-title" id="modalLabel">Portfolio title</h3>
+										<div class="ms-auto" id="modalRegDate">
 											yyyy/mm/dd
 										</div>
 										<button type="button" class="btn-close ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
-										<p>
+										<p id="modalContent">
 											* Et nunc nunc interdum integer quam ut.<br/>
 											Lorem lacus sapien eget faucibus aenean et urna commodo integer.<br/>
 											Tempor cursus ultricies eget massa. Viverra netus nulla amet viverra mauris consectetur risus elit tempor.<br/>
@@ -170,8 +142,8 @@
 											Vel quis lorem et pretium integer vitae convallis ac orci. Dictum suspendisse vivamus venenatis nisl elit pharetra. Volutpat cras tempus elementum dignissim et accumsan. Et sem erat enim velit enim blandit. Convallis a id sit eu viverra scelerisque suspendisse sit.<br/>
 										</p>
 										<hr/>
-										<div class="row">
-											<div class="col-12">
+										<div class="row" id="modalImgs">
+<!-- 											<div class="col-12">
 												<img src="../images/long-img-1.jpg" alt="portfolio-img-1" width="100%">
 											</div>
 											<div class="col-12">
@@ -180,7 +152,7 @@
 											<div class="col-12">
 												<img src="../images/long-img-3.jpg" alt="portfolio-img-3" width="100%">
 											</div>
-										</div>
+ -->										</div>
 									</div>
 								</div>
 							</div>
@@ -269,9 +241,11 @@
 			</div>
 		</div>
 	</section>
+</main>
 </th:block>
 <th:block layout:fragment="script-bottom">
 	<script th:src="@{/js/customModal.js}"></script>
+	<script th:src="@{/js/profile.js}"></script>
 </th:block>
 </body>
 </html>

@@ -1,11 +1,11 @@
 const portfolios = document.querySelectorAll(".portfolio");
 
-portfolios.forEach(el => {
-  el.addEventListener("click", () => {
-    const portfolioId = el.dataset.id;
-    loadPortfolio(portfolioId);
-  });
-});
+ portfolios.forEach(el => {
+   el.addEventListener("click", () => {
+     const portfolioId = el.dataset.id;
+     loadPortfolio(portfolioId);
+   });
+ });
 
 
 function loadPortfolio(portfolioId) {

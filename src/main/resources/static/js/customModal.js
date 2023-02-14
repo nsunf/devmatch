@@ -3,7 +3,7 @@ function setModalScrolling() {
   document.documentElement.style.overflowY = isModalOpened ? "hidden" : "initial";
 }
 
-document.querySelectorAll(".portfolio-card").forEach(el => {
+document.querySelectorAll(".portfolio").forEach(el => {
   el.style.cursor = "pointer";
   el.addEventListener("click", () => setModalScrolling());
 });

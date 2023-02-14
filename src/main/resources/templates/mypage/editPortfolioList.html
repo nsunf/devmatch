@@ -15,7 +15,7 @@
 
 			<div class="col portfolio" th:each="portfolioDto, status: ${portfolioDtoList}" th:data-id="${portfolioDto.id}">
 				<div class="card rounded-4 p-0 overflow-hidden portfolio-card" th:with="imgUrlList=${portfolioDto.imgUrlList}">
-					<img th:src="${imgUrlList.size > 0 ? imgUrlList[0] : null}" class="card-img-top" th:alt="${'portfolio' + status.index + '-img'}"  data-bs-toggle="modal" data-bs-target="#portfolio-popup" style="width: 100%; aspect-ratio: 1/1; object-fit: cover;">
+					<img th:src="${imgUrlList.size > 0 ? imgUrlList[0] : '/images/no-img.png'}" class="card-img-top" th:alt="${'portfolio' + status.index + '-img'}"  data-bs-toggle="modal" data-bs-target="#portfolio-popup" style="width: 100%; aspect-ratio: 1/1; object-fit: cover;">
 					<div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;"  data-bs-toggle="modal" data-bs-target="#portfolio-popup">
 						<p class="card-text fs-5" th:text="${portfolioDto.title}" style="text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;">portfolio-title</p>
 						<p class="card-text d-none d-xl-block" th:text="${portfolioDto.regDate}">yyyy/mm/dd</p>

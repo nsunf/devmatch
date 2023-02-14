@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,7 +63,7 @@ public class PortfolioService {
 		return new PortfolioDto(portfolio, imgUrlList);
 	}
 
-	public List<PortfolioDto> getPortfolioList() {
+	public List<PortfolioDto> getPortfolioListByMember() {
 		Member member = memberService.getMember();
 		List<Portfolio> portfolioList = portfolioRepo.findByMemberId(member.getId());
 		
@@ -73,6 +75,26 @@ public class PortfolioService {
 		return portfolioDtoList;
 	}
 	
+	public Page<PortfolioDto> getPortfolioDtoPageable(String searchQuery, Pageable pageable) {
+		Page<PortfolioDto> result = portfolioRepo.getPortfolioDtoList(searchQuery, pageable);
+		
+		result.stream().forEach(portfolioDto -> {
+//			MemberDto memberDto = memberService.getMemberDtoById(portfolioDto.)
+			List<String> imgUrlList = portfolioImgService.getImgUrls(portfolioDto.getId());
+			portfolioDto.setImgUrlList(imgUrlList);
+		});
+		return result;
+	}
+	
+	public List<PortfolioDto> getPortfolioDtoListByProfileId(Long profileId, int amount) {
+		List<Portfolio> portfolioList = portfolioRepo.findByProfileId(profileId);
+		return portfolioList.stream().map(portfolio -> {
+			List<String> imgUrlList = portfolioImgService.getImgUrls(portfolio.getId());
+			PortfolioDto portfolioDto = new PortfolioDto(portfolio, imgUrlList);
+			return portfolioDto;
+		}).toList();
+	}
+
 	public void deletePortfolio(Long portfolioId) {
 		portfolioImgService.deleteImgs(portfolioId);
 		portfolioRepo.deleteById(portfolioId);

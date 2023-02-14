@@ -19,6 +19,7 @@ public class Profile extends BaseEntity {
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 	
+	@Lob
 	private String title;
 	
 	private String subTitle;

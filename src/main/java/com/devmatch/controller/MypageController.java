@@ -51,7 +51,7 @@ public class MypageController {
 	
 	@GetMapping("/dashboard")
 	public String admin(Model model, Principal principal) {
-		model.addAttribute("memberDto", memberService.getMemberDto(principal.getName()));
+		model.addAttribute("memberDto", memberService.getMemberDtoByEmail(principal.getName()));
 
 		return "mypage/dashboard";
 	}
@@ -122,7 +122,7 @@ public class MypageController {
 	@PreAuthorize("hasRole('ROLE_PROVIDER')")
 	@GetMapping("/portfolios")
 	public String portfolios(Model model) {
-		model.addAttribute("portfolioDtoList", portfolioService.getPortfolioList());
+		model.addAttribute("portfolioDtoList", portfolioService.getPortfolioListByMember());
 
 		return "mypage/editPortfolioList";
 	}

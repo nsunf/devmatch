@@ -36,7 +36,7 @@
           <div  class="border rounded-4 bg-white p-4 sticky-top" style="top: 1rem;">
             <form class="d-flex flex-column" role="search" th:action="@{/portfolios}">
               <!-- 검색창 -->
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control me-2" type="search" name="searchQuery" placeholder="Search" th:value="${searchQuery}" aria-label="Search">
               
               <!-- 버튼 -->
               <div class="hstack my-3">
@@ -47,9 +47,9 @@
         </div>
         <!-- 포트폴리오 카드 -->
         <div class="col-lg-8 my-3 my-lg-0 px-4 px-sm-3">
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 g-xxl-4">
+          <div id="portfolioCardList" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 g-xxl-4">
   
-            <div class="col">
+<!--             <div class="portfolio col">
               <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
                 <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
                 <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
@@ -58,137 +58,11 @@
                 </div>
                 <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
                   <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
+                  <img class="rounded-circle" src="../images/profile-img-640.jpg" alt="profile-img" width="40" height="40">
                 </a>
               </div>
             </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
-            <div class="col">
-              <div class="card rounded-4 p-0 overflow-hidden portfolio-card" data-bs-toggle="modal" data-bs-target="#portfolio-popup">
-                <img src="../images/portfolio-sample-1.jpg" class="card-img-top" alt="...">
-                <div class="card-body mb-3 mb-xl-0" style="box-sizing: border-box;">
-                  <p class="card-text fs-5">portfolio-title</p>
-                  <p class="card-text d-none d-xl-block">yyyy/mm/dd</p>
-                </div>
-                <a class="hstack position-absolute bottom-0 end-0 p-2 text-primary" href="./provProfile.html">
-                  <span class="card-text me-2">김김김</span>
-                  <img class="rounded-circle" src="../images//profile-img-640.jpg" alt="profile-img" width="40" height="40">
-                </a>
-              </div>
-            </div>
-  
+ -->  
           </div>
         </div>
         <!-- 포트폴리오 상세 -->
@@ -196,14 +70,14 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header hstack">
-                <h3 class="modal-title" id="moalLabel">Portfolio title</h3>
-                <div class="ms-auto">
+                <h3 class="modal-title" id="modalLabel">Portfolio title</h3>
+                <div class="ms-auto" id="modalRegDate">
                   yyyy/mm/dd
                 </div>
                 <button type="button" class="btn-close ms-4" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p>
+                <p id="modalContent">
                   * Et nunc nunc interdum integer quam ut.<br/>
                   Lorem lacus sapien eget faucibus aenean et urna commodo integer.<br/>
                   Tempor cursus ultricies eget massa. Viverra netus nulla amet viverra mauris consectetur risus elit tempor.<br/>
@@ -216,17 +90,11 @@
                   Vel quis lorem et pretium integer vitae convallis ac orci. Dictum suspendisse vivamus venenatis nisl elit pharetra. Volutpat cras tempus elementum dignissim et accumsan. Et sem erat enim velit enim blandit. Convallis a id sit eu viverra scelerisque suspendisse sit.<br/>
                 </p>
                 <hr/>
-                <div class="row">
-                  <div class="col-12">
+                <div class="row" id="modalImgs">
+<!--                   <div class="col-12">
                     <img src="../images/long-img-1.jpg" alt="portfolio-img-1" width="100%">
                   </div>
-                  <div class="col-12">
-                    <img src="../images/long-img-2.jpg" alt="portfolio-img-2" width="100%">
-                  </div>
-                  <div class="col-12">
-                    <img src="../images/long-img-3.jpg" alt="portfolio-img-3" width="100%">
-                  </div>
-                </div>
+ -->                </div>
               </div>
             </div>
           </div>
@@ -237,6 +105,7 @@
   </main>
 </th:block>
 <th:block layout:fragment="script-bottom">
+  <script th:src="@{/js/portfolioList.js}"></script>
   <script th:src="@{/js/customModal.js}"></script>
 </th:block>
 </body>

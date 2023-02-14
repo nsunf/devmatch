@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.devmatch.dto.PartnerSearchDto;
+import com.devmatch.dto.PortfolioDto;
 import com.devmatch.dto.ProfileCardDto;
+import com.devmatch.dto.ProfileDto;
+import com.devmatch.service.PortfolioService;
 import com.devmatch.service.ProfileService;
 import com.devmatch.service.StackService;
 
@@ -32,6 +35,7 @@ public class PartnerController {
 	
 	private final ProfileService profileService;
 	private final StackService stackService; 
+	private final PortfolioService portfolioService;
 	
 	@GetMapping("")
 	public String partners(@RequestParam(required = false) String searchQuery, @RequestParam(required = false) List<Long> stackIdList, Model model) {
@@ -61,8 +65,10 @@ public class PartnerController {
 	
 	@GetMapping("/{partnerId}")
 	public String partnerProfile(@PathVariable Long partnerId, Model model) {
-		
-		model.addAttribute("profileDto", profileService.getProfileDto(partnerId));
+		ProfileDto profileDto = profileService.getProfileDto(partnerId);
+		List<PortfolioDto> portfolioDtoLIst = portfolioService.getPortfolioDtoListByProfileId(profileDto.getId(), 4);
+		model.addAttribute("profileDto", profileDto);
+		model.addAttribute("portfolioDtoList", portfolioDtoLIst);
 		return "partners/profile";
 	}
 }

@@ -46,7 +46,7 @@ public class PortfolioImgService {
 		});
 	}
 	
-	public List<String> getImgUrls(Long profileId) {
-		return portfolioImgRepo.findByPortfolioId(profileId).stream().map(PortfolioImg::getImgUrl).toList();
+	public List<String> getImgUrls(Long portfolioId) {
+		return portfolioImgRepo.findByPortfolioId(portfolioId).stream().map(PortfolioImg::getImgUrl).toList();
 	}
 }
