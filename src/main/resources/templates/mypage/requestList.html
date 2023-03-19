@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+<style>
+	.card {
+		transition: 150ms;
+	}
+	.card:hover {
+		transform: scale(1.01);
+	}
+</style>
+</head>
+<body>
+
+	<th:block layout:fragment="content">
+		<!-- 메인 내용 -->
+		<div class="col-lg-8">
+			<div class="row row-cols-1 g-3">
+
+				<div class="col" th:each="requestDto : ${requestDtoList}">
+					<div class="card p-3">
+						<a class="text-decoration-none" th:href="@{/mypage/requests/{id}(id=${requestDto.id})}">
+							<div class="hstack mb-5">
+								<div class="card-title fs-5 my-auto me-4">[[${requestDto.title}]]</div>
+								<button class="btn btn-primary">진행중</button>
+								<div class="card-text ms-auto">[[${requestDto.regDate}]]</div>
+							</div>
+							<div class="hstack">
+								<div>
+									<div class="card-text">마감일 : <span>[[${requestDto.deadline}]]</span></div>
+									<div class="card-text">보상 : <span>[[${#numbers.formatInteger(requestDto.reward, 3, 'COMMA')}]]원</span></div> </div>
+								<div class="ms-auto hstack">
+									<img class="rounded-circle object-fit-cover" th:src="${requestDto.provider.imgUrl == null ? '/images/empty-profile-img.jpg' : requestDto.provider.imgUrl}" alt="prov-profile-img" width="40px" height="40px">
+									<div class="ms-2">[[${requestDto.provider.name}]]</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row mt-5" th:with="total=${requestDtoList.totalPages}, start=${(page/maxPage) * maxPage + 1}, end=${total == 0 ? 1 : (start + (maxPage - 1) < total ? start + (maxPage - 1) : total)}">
+				<nav class="col hstack" aria-label="Page navigation example">
+					<ul class="pagination mx-auto">
+
+						<li class="page-item" th:classappend="${page eq 0 ? 'disabled': null}">
+							<a class="page-link" th:href="@{/mypage/requests(page=${page - 1})}" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+
+						<li class="page-item" th:each="number : ${#numbers.sequence(start, end)}" th:classappend="${page eq number - 1 ? 'active' : null}">
+							<a class="page-link" th:href="@{/mypage/requests(page=${number - 1})}">[[${number}]]</a>
+						</li>
+
+						<li class="page-item" th:classappend="${page + 1 ge total ? 'disabled' : null}">
+							<a class="page-link" th:href="@{/mypage/requests(page=${page + 1})}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+
+					</ul>
+				</nav>
+			</div>
+
+		</div>
+	</th:block>
+
+	<th:block layout:fragment="script-bottom">
+	</th:block>
+</body>
+</html>

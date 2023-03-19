@@ -5,9 +5,12 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,6 +36,7 @@ import com.devmatch.entity.Member;
 import com.devmatch.service.MemberService;
 import com.devmatch.service.PortfolioService;
 import com.devmatch.service.ProfileService;
+import com.devmatch.service.RequestService;
 import com.devmatch.service.StackService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +50,7 @@ public class MypageController {
 	private final StackService stackService;
 	private final ProfileService profileService;
 	private final PortfolioService portfolioService;
+	private final RequestService requestService;
 
 	private final PasswordEncoder passwordEncoder;
 	
@@ -79,6 +84,21 @@ public class MypageController {
 		}
 		
 		return "redirect:/mypage/info";
+	}
+	
+	@GetMapping("/requests")
+	public String requestList(@RequestParam Optional<Integer> page, Model model) {
+		Pageable pageable = PageRequest.of(page.orElse(0), 3);
+		model.addAttribute("requestDtoList", requestService.getRequestDtoList(pageable));
+		model.addAttribute("page", pageable.getPageNumber());
+		model.addAttribute("maxPage", 5);
+		return "mypage/requestList";
+	}
+	
+	@GetMapping("/requests/{id}")
+	public String requestDetail(@PathVariable Long id, Model model) {
+		model.addAttribute("requestDto", requestService.getRequestDto(id));
+		return "mypage/requestDetail";
 	}
 	
 //	PROVIDER

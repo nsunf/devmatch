@@ -3,6 +3,8 @@ package com.devmatch.service;
 import java.io.IOException;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,11 @@ public class ProfileService {
 	private final ProfileImgService profileImgService;
 	private final StackService stackService;
 	private final MemberService memberService;
+
+	@Transactional(readOnly = true)
+	public Profile getProfile(Long id) {
+		return profileRepo.findById(id).orElseThrow(EntityNotFoundException::new);
+	}
 	
 	@Transactional(readOnly = true)
 	public ProfileFormDto getProfileFormDto(Long memberId) {
@@ -75,10 +82,12 @@ public class ProfileService {
 		}
 	}
 	
+	@Transactional(readOnly = true)
 	public Page<ProfileCardDto> getProfileCardDtoList(String searchQuery, List<Long> stackIdList, Pageable pageable) {
 		return profileRepo.getProfileCardDtoList(searchQuery, stackIdList, pageable);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public ProfileDto getProfileDto(Long profileId) {
 		ProfileDto profileDto = profileRepo.getProfileDto(profileId); 
 		List<StackDto> stackDtoList = stackService.getStackDtoListByProfileId(profileId);
@@ -90,6 +99,7 @@ public class ProfileService {
 		return profileDto;
 	}
 
+	@Transactional(readOnly = true)
 	public boolean isExist() {
 		Member member = memberService.getMember();
 		Profile profile = profileRepo.findByMemberId(member.getId()).orElse(null);

@@ -19,7 +19,7 @@
 					<div class="profile-card background-gradient-1 mx-auto">
 						<div class="profile-card__top">
 							<div class="profile-card__grade">
-								<img src="../images/grade/Level=1.png" alt="grad-img">
+								<img src="/images/grade/Level=1.png" alt="grad-img">
 							</div>
 							<div class="profile-card__desc">
 								<h5 class="desc__greeting" th:text="*{title}">Java Spring Boot 백엔드 개발자</h5>
@@ -35,7 +35,7 @@
 					</div>
 				</div>
 				<div class="col-12 col-lg-2 hstack">
-					<a class="mt-auto ms-auto ms-lg-0" href="./sendRequest.html">
+					<a class="mt-auto ms-auto ms-lg-0" th:href="@{/partners/{id}/request/new(id=${profileDto.id})}">
 						<button class="btn btn-primary px-4">요청 작성</button>
 					</a>
 				</div>

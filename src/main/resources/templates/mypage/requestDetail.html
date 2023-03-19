@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+<style>
+	.card {
+		transition: 150ms;
+	}
+	.card:hover {
+		transform: scale(1.01);
+	}
+</style>
+</head>
+<body>
+
+	<th:block layout:fragment="content">
+		<!-- 메인 내용 -->
+		<div class="col-lg-8">
+
+			<div class="row">
+				<div class="col-md-10 mx-auto border rounded-3 py-4 px-3">
+					<div class="hstack mb-5">
+						<div class="card-title fs-5 my-auto me-4">[[${requestDto.title}]]</div>
+						<button class="btn btn-primary">[[${requestDto.status}]]</button>
+						<div class="card-text ms-auto">[[${requestDto.regDate}]]</div>
+					</div>
+					<div class="hstack">
+						<div>
+							<div class="card-text">마감일 : <span>[[${requestDto.deadline}]]</span></div>
+							<div class="card-text">보상 : <span>[[${#numbers.formatInteger(requestDto.reward, 3, 'COMMA')}]]원</span></div>
+						</div>
+						<div class="ms-auto">
+							<a class="hstack" href="./provProfile.html">
+								<img class="rounded-circle object-fit-cover" th:src="${requestDto.provider.imgUrl}" alt="prov-profile-img" width="40px" height="40px" onerror="this.src='/images/empty-profile-img.jpg';">
+								<div class="ms-2">[[${requestDto.provider.name}]]</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-10 mx-auto my-4">
+					<div class="hstack" th:if="${requestDto.status == 'COMPLETE' && requestDto.accepted}">
+						<button id="comment-btn" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#comment-popup">평가하기</button>
+					</div>
+				</div>
+			</div>
+			<hr class="mx-md-5" />
+			<div class="row">
+				<div class="col-md-10 mx-auto">
+					<p class="w-100 border rounded-3 p-4 py-5 my-3" th:text="${requestDto.content}">
+						Sodales facilisi massa amet euismod quis egestas faucibus risus curabitur.<br />
+						Quam vulputate feugiat pellentesque nisl lectus praesent. Integer in facilisi senectus magna facilisis bibendum pretium phasellus.<br />
+						<br />
+						Blandit vitae dolor porttitor pellentesque nam integer nunc at et. Posuere faucibus ac pellentesque quis ut feugiat non.<br />
+						Iaculis mattis sed vulputate leo eget sem nulla leo at. Senectus aenean malesuada nunc arcu augue arcu varius.<br />
+						Vitae integer ultrices fames mauris interdum blandit. Quam consectetur egestas mauris ullamcorper.<br />
+						<br />
+						<br />
+						Nisl vel sagittis odio magna senectus gravida.
+					</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-10 mx-auto hstack">
+					<a class="ms-auto" href=""><button class="btn btn-secondary px-4">취소</button></a>
+					<a class="ms-4" href="./editRequest.html"><button class="btn btn-primary px-4">수정</button></a>
+				</div>
+			</div>
+
+		</div>
+
+	</th:block>
+	
+	<th:block layout:fragment="modal">
+		<div class="modal fade" id="comment-popup" tabindex="-1" aria-labelledby="commentLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="commentLabel">평가하기</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form class="" action="">
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Comments</label>
+              </div>
+              <div class="hstack">
+                <button class="btn btn-primary ms-auto mt-4 mb-2 px-3" type="submit">평가하기</button>
+              </div>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+	</th:block>
+
+	<th:block layout:fragment="script-bottom">
+		<script src="/js/requestDetail.js"></script>
+	</th:block>
+</body>
+</html>

@@ -11,7 +11,7 @@
 				<!-- 고객 -->
 				<nav sec:authorize="hasRole('CUSTOMER')" class="nav nav-pills row row-cols-2 row-cols-sm-3 row-cols-lg-1">
 					<a class="nav-link" th:classappend="${path == '/mypage/dashboard' ? 'active' : null}" th:aria-current="${path == '/mypage/dashboard' ? 'page' : null}" th:href="@{/mypage/dashboard}">대쉬보드</a>
-					<a class="nav-link" th:classappend="${path == '/mypage/requests' ? 'active' : null}" th:aria-current="${path == '/mypage/requests' ? 'page' : null}" th:href="@{/mypage/requests}">요청 내역</a>
+					<a class="nav-link" th:classappend="${#strings.startsWith(path, '/mypage/requests') ? 'active' : null}" th:aria-current="${path == '/mypage/requests' ? 'page' : null}" th:href="@{/mypage/requests}">요청 내역</a>
 					<a class="nav-link" th:classappend="${path == '/mypage/info' ? 'active' : null}" th:aria-current="${path == '/mypage/info' ? 'page' : null}" th:href="@{/mypage/info}">개인정보 변경</a>
 				</nav>
 				<!-- 파트너 -->
