@@ -30,7 +30,14 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 	}
 	
 	public BooleanExpression containName(String searchQuery) {
-		return QMember.member.last_name.append(QMember.member.first_name).contains(searchQuery);
+		QMember member = QMember.member;
+		QProfile profile = QProfile.profile;
+		return member.last_name
+				.append(member.first_name)
+				.contains(searchQuery)
+				.or(profile.title.contains(searchQuery))
+				.or(profile.subTitle.contains(searchQuery))
+				.or(profile.content.contains(searchQuery));
 	}
 	
 	public BooleanExpression inStackIdList(QProfile profile, List<Long> stackIdList) {
@@ -42,7 +49,7 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 			if (i == 0)
 				result = profileStackIdList.contains(stackIdList.get(i));
 			else
-				result = result.or(profileStackIdList.contains(stackIdList.get(i)));
+				result = result.and(profileStackIdList.contains(stackIdList.get(i)));
 		}
 		
 		return result;

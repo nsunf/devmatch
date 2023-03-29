@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Estimation extends BaseEntity {
+public class Rating extends BaseEntity {
 	@Id
 	@Column(name = "estimation_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +28,7 @@ public class Estimation extends BaseEntity {
 //	private Member provider;
 	
 	@Column(nullable = false)
-	private int score;
+	private Integer score;
 	
 	@Lob
 	@Column(nullable = true)

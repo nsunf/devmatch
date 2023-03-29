@@ -30,6 +30,7 @@ import com.devmatch.dto.EditMemberFormDto;
 import com.devmatch.dto.PortfolioDto;
 import com.devmatch.dto.PortfolioFormDto;
 import com.devmatch.dto.ProfileFormDto;
+import com.devmatch.dto.RatingFormDto;
 import com.devmatch.dto.RequestFormDto;
 import com.devmatch.dto.StackDto;
 import com.devmatch.dto.StackFormDto;
@@ -37,6 +38,7 @@ import com.devmatch.entity.Member;
 import com.devmatch.service.MemberService;
 import com.devmatch.service.PortfolioService;
 import com.devmatch.service.ProfileService;
+import com.devmatch.service.RatingService;
 import com.devmatch.service.RequestService;
 import com.devmatch.service.StackService;
 
@@ -52,6 +54,7 @@ public class MypageController {
 	private final ProfileService profileService;
 	private final PortfolioService portfolioService;
 	private final RequestService requestService;
+	private final RatingService ratingService;
 
 	private final PasswordEncoder passwordEncoder;
 	
@@ -101,6 +104,7 @@ public class MypageController {
 	@GetMapping("/requests/{id}")
 	public String requestDetail(@PathVariable Long id, Model model) {
 		model.addAttribute("requestDto", requestService.getRequestDto(id));
+		model.addAttribute("ratingFormDto", ratingService.getRatingFormDto(id));
 		return "mypage/requestDetail";
 	}
 	
@@ -138,6 +142,11 @@ public class MypageController {
 		return "redirect:/mypage/requests/" + id;
 	}
 	
+	@PostMapping("/requests/rating")
+	public String rateRequest(RatingFormDto formDto) {
+		ratingService.rate(formDto);
+		return "redirect:/mypage/requests/" + formDto.getRequestId();
+	}
 	
 //	PROVIDER
 	@PreAuthorize("hasRole('ROLE_PROVIDER')")

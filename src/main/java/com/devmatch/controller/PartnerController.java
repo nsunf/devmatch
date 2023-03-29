@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,14 +47,7 @@ public class PartnerController {
 	private final RequestService requestService;
 	
 	@GetMapping("")
-	public String partners(@RequestParam(required = false) String searchQuery, @RequestParam(required = false) List<Long> stackIdList, Model model) {
-		PartnerSearchDto partnerSearchDto = new PartnerSearchDto();
-
-		if (searchQuery != null && stackIdList != null) {
-			partnerSearchDto.setSearchQuery(searchQuery);
-			partnerSearchDto.setStackIdList(stackIdList);
-		}
-
+	public String partners(PartnerSearchDto partnerSearchDto, Model model) {
 		model.addAttribute("partnerSearchDto", partnerSearchDto);
 		model.addAttribute("stackList", stackService.getStackDtoListAll());
 		
@@ -61,10 +55,10 @@ public class PartnerController {
 	}
 	
 	@GetMapping("/load")
-	public @ResponseBody ResponseEntity<?> loadPartners(@RequestParam(required = false) String searchQuery, @RequestParam(required = false) List<Long> stackIdList , @RequestParam Optional<Integer> page) {
+	public @ResponseBody ResponseEntity<?> loadPartners(PartnerSearchDto partnerSearchDto, @RequestParam Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.orElse(0), 8);
 		
-		Page<ProfileCardDto> profileCardDtoList = profileService.getProfileCardDtoList(searchQuery, stackIdList, pageable);
+		Page<ProfileCardDto> profileCardDtoList = profileService.getProfileCardDtoList(partnerSearchDto.getSearchQuery(), partnerSearchDto.getStackIdList(), pageable);
 		
 		Map<String, Object> data = new HashMap<>();
 		data.put("result", profileCardDtoList);
