@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Insert title here</title>
+<link href="/css/global.css" rel="stylesheet">
+</head>
+<body>
+
+	<th:block layout:fragment="content">
+		<!-- 메인 내용 -->
+			<div class="col-lg-8">
+				
+				<form class="row gy-4 gx-2 gx-md-4" th:action="@{/mypage/requests/edit/{id}(id=${requestFormDto.id})}" method="post" th:object="${requestFormDto}">
+					<input type="hidden" th:field="*{id}">
+					<div class="col-12">
+						<label th:for="title" class="form-label">제목</label>
+						<input type="text" class="form-control" th:field="*{title}" placeholder="요청 제목을 입력해주세요." required>
+						<div class="invalid-feedback">
+							제목은 필수 입력값입니다.
+						</div>
+					</div>
+					<div class="col-6">
+						<label th:for="reward" class="form-label">보상</label>
+						<div class="input-group">
+							<input type="number" class="form-control" th:field="*{reward}" placeholder="보상 가격을 입력해주세요." required>
+							<div class="input-group-text bg-primary text-white">원</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<label th:for="deadline" class="form-label">마감일</label>
+						<input type="date" class="form-control" th:field="*{deadline}" required>
+					</div>
+					<div class="col-12">
+						<div class="form-floating">
+							<textarea class="form-control" placeholder="Leave a comment here" th:field="*{content}" style="resize: none; min-height: 25vh;" required></textarea>
+							<label th:for="content">요구사항</label>
+						</div>
+					</div>
+					<div class="col hstack">
+						<button type="submit" class="btn btn-primary px-5 ms-auto">요청</button>
+					</div>
+				</form>
+      </div>
+	</th:block>
+	
+	<th:block layout:fragment="script-bottom">
+	</th:block>
+</body>
+</html>

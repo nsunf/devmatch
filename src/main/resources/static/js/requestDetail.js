@@ -3,7 +3,10 @@ function setModalScrolling() {
   document.documentElement.style.overflowY = isModalOpened ? "hidden" : "initial";
 }
 
-document.getElementById("comment-btn").addEventListener("click", setModalScrolling);
+const commentBtn = document.getElementById("comment-btn");
+
+if (commentBtn != null)
+	commentBtn.addEventListener("click", setModalScrolling);
 
 document.getElementById("comment-popup").addEventListener("hidden.bs.modal", () => {
   setModalScrolling();

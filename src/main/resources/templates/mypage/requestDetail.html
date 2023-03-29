@@ -25,7 +25,13 @@
 				<div class="col-md-10 mx-auto border rounded-3 py-4 px-3">
 					<div class="hstack mb-5">
 						<div class="card-title fs-5 my-auto me-4">[[${requestDto.title}]]</div>
-						<button class="btn btn-primary">[[${requestDto.status}]]</button>
+						<th:block th:switch="${requestDto.status}">
+							<button th:case="${T(com.devmatch.constant.RequestType).REQUEST}" class="btn btn-danger">새로운 요청</button>
+							<button th:case="${T(com.devmatch.constant.RequestType).PROGRESS}" class="btn btn-primary">진행중</button>
+							<button th:case="${T(com.devmatch.constant.RequestType).COMPLETE}" class="btn" th:classappend="${requestDto.accepted ? 'btn-success' : 'btn-outline-success'}">[[${requestDto.accepted ? '완료' : '완료 요청'}]]</button>
+							<button th:case="${T(com.devmatch.constant.RequestType).CANCEL}" class="btn" th:classappend="${requestDto.accepted ? 'btn-secondary' : 'btn-outline-secondary'}">[[${requestDto.accepted ? '취소' : '취소 요청'}]]</button>
+							<button th:case="${T(com.devmatch.constant.RequestType).EDIT}" class="btn btn-warning">수정 요청</button>
+						</th:block>
 						<div class="card-text ms-auto">[[${requestDto.regDate}]]</div>
 					</div>
 					<div class="hstack">
@@ -41,8 +47,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-10 mx-auto my-4">
-					<div class="hstack" th:if="${requestDto.status == 'COMPLETE' && requestDto.accepted}">
+				<div class="col-md-10 mx-auto my-4" th:if="${requestDto.status == 'COMPLETE' && requestDto.accepted}">
+					<div class="hstack">
 						<button id="comment-btn" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#comment-popup">평가하기</button>
 					</div>
 				</div>
@@ -50,7 +56,7 @@
 			<hr class="mx-md-5" />
 			<div class="row">
 				<div class="col-md-10 mx-auto">
-					<p class="w-100 border rounded-3 p-4 py-5 my-3" th:text="${requestDto.content}">
+					<p class="w-100 border rounded-3 p-4 py-5 mb-3" th:text="${requestDto.content}">
 						Sodales facilisi massa amet euismod quis egestas faucibus risus curabitur.<br />
 						Quam vulputate feugiat pellentesque nisl lectus praesent. Integer in facilisi senectus magna facilisis bibendum pretium phasellus.<br />
 						<br />
@@ -64,13 +70,110 @@
 				</div>
 			</div>
 
+
+			<th:block th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).EDIT}">
+				<div class="d-flex flex-row align-items-center">
+					<div class="flex-grow-1 border-bottom border-danger" style="height: 1px;"></div>
+					<p class="align-middle text-danger mx-2">수정 요청</p>
+					<div class="flex-grow-1 border-bottom border-danger" style="height: 1px;"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-10 mx-auto border rounded-3 py-4 px-3">
+						<div class="hstack mb-5">
+							<div class="card-title fs-5 my-auto me-4" th:classappend="${requestDto.title eq requestDto.titleTmp ? null : 'text-danger' }">[[${requestDto.titleTmp}]]</div>
+							<!--/* <button class="btn btn-primary">[[${requestDto.status}]]</button> */-->
+							<div class="card-text ms-auto">[[${requestDto.regDate}]]</div>
+						</div>
+						<div class="hstack">
+							<div>
+								<div class="card-text">마감일 : <span th:classappend="${requestDto.deadline eq requestDto.deadlineTmp ? null : 'text-danger'}">[[${requestDto.deadlineTmp}]]</span></div>
+								<div class="card-text">보상 : <span th:classappend="${requestDto.reward eq requestDto.rewardTmp ? null : 'text-danger'}">[[${#numbers.formatInteger(requestDto.rewardTmp, 3, 'COMMA')}]]원</span></div>
+							</div>
+							<div class="ms-auto">
+								<a class="hstack" href="./provProfile.html">
+									<img class="rounded-circle object-fit-cover" th:src="${requestDto.provider.imgUrl}" alt="prov-profile-img" width="40px" height="40px" onerror="this.src='/images/empty-profile-img.jpg';">
+									<div class="ms-2">[[${requestDto.provider.name}]]</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-10 mx-auto my-4" th:if="${requestDto.status == 'COMPLETE' && requestDto.accepted}">
+						<div class="hstack">
+							<button id="comment-btn" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#comment-popup">평가하기</button>
+						</div>
+					</div>
+				</div>
+				<hr class="mx-md-5" />
+				<div class="row">
+					<div class="col-md-10 mx-auto">
+						<p class="w-100 border rounded-3 p-4 py-5 mb-3" th:classappend="${requestDto.content eq requestDto.contentTmp ? null : 'text-danger'}" th:text="${requestDto.contentTmp}">
+							Sodales facilisi massa amet euismod quis egestas faucibus risus curabitur.<br />
+							Quam vulputate feugiat pellentesque nisl lectus praesent. Integer in facilisi senectus magna facilisis bibendum pretium phasellus.<br />
+							<br />
+							Blandit vitae dolor porttitor pellentesque nam integer nunc at et. Posuere faucibus ac pellentesque quis ut feugiat non.<br />
+							Iaculis mattis sed vulputate leo eget sem nulla leo at. Senectus aenean malesuada nunc arcu augue arcu varius.<br />
+							Vitae integer ultrices fames mauris interdum blandit. Quam consectetur egestas mauris ullamcorper.<br />
+							<br />
+							<br />
+							Nisl vel sagittis odio magna senectus gravida.
+						</p>
+					</div>
+				</div>
+			</th:block>
+
 			<div class="row">
-				<div class="col-md-10 mx-auto hstack">
-					<a class="ms-auto" href=""><button class="btn btn-secondary px-4">취소</button></a>
-					<a class="ms-4" href="./editRequest.html"><button class="btn btn-primary px-4">수정</button></a>
+				<div class="col-md-10 mx-auto d-flex justify-content-end gap-3" sec:authorize="hasRole('CUSTOMER')">
+					<a th:href="@{/mypage/requests/cancel/{id}(id=${requestDto.id})}"
+						th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).PROGRESS}"
+					>
+						<button class="btn btn-secondary px-4">취소 요청</button>
+					</a>
+					<a
+						th:href="@{/mypage/requests/revert/{id}(id=${requestDto.id})}"
+						th:if="${not(requestDto.status eq T(com.devmatch.constant.RequestType).PROGRESS || requestDto.status eq T(com.devmatch.constant.RequestType).COMPLETE) && not(requestDto.accepted)}"
+					>
+						<button class="btn btn-secondary px-4">요청 취소</button>
+					</a>
+					<a 
+						th:href="@{/mypage/requests/edit/{id}(id=${requestDto.id})}"
+						th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).PROGRESS}"
+					>
+						<button class="btn btn-primary px-4">수정 요청</button>
+					</a>
+					<a 
+						th:href="@{/mypage/requests/complete/{id}(id=${requestDto.id})}"
+						th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).COMPLETE && requestDto.accepted eq false}"
+					>
+						<button class="btn btn-primary px-4">완료</button>
+					</a>
+				</div>
+				<div class="col-md-10 mx-auto d-flex justify-content-end gap-3" sec:authorize="hasRole('PROVIDER')">
+					<a
+						th:href="@{/mypage/requests/complete/{id}(id=${requestDto.id})}"
+						th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).PROGRESS}"
+					>
+						<button class="btn btn-primary px-4">완료 요청</button>
+					</a>
+					<a
+						th:href="@{/mypage/requests/deny/{id}(id=${requestDto.id})}"
+						th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).REQUEST && not(requestDto.accepted)}"
+					>
+						<button class="btn btn-secondary px-4">거절</button>
+					</a>
+					<a
+						th:href="@{/mypage/requests/accept/{id}(id=${requestDto.id})}"
+						th:if="${not(requestDto.status eq T(com.devmatch.constant.RequestType).PROGRESS || requestDto.status eq T(com.devmatch.constant.RequestType).COMPLETE) && not(requestDto.accepted)}"
+					>
+						<button class="btn btn-primary px-4">승인</button>
+					</a>
+					<a
+						th:href="@{/mypage/requests/revert/{id}(id=${requestDto.id})}"
+						th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).COMPLETE && not(requestDto.accepted)}"
+					>
+						<button class="btn btn-secondary px-4">요청 취소</button>
+					</a>
 				</div>
 			</div>
-
 		</div>
 
 	</th:block>

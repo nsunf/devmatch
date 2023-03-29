@@ -2,6 +2,7 @@ memo --------------------------------------------------------------------
 erd estimation 수정 필요
 로그인 api
 결제 api
+firebase 알림
 todo --------------------------------------------------------------------
 main
 메인 파트너 찾기 버튼 링크
@@ -9,15 +10,17 @@ main
 partner
 	partner detail - sidebar scroll effect
 	profile detail 줄바꿈
+	검색 시 제목, 내용 검색
 
 request
 	별점
+	마감일 현재 시점 이후로만 가능
+	요청 트랜잭션
 member
 	logged in redirection
 	login failure page
 	로그인 시 어느 페이지로 가게 되는
+mypage
+	회원 이름, 이메일 구분
 
 done --------------------------------------------------------------------
-portfolios list modal
-portfolios popup
-create request

@@ -21,11 +21,19 @@ public class RequestDto {
 	
 	private String regDate;
 	
-	private int reward;
+	private Integer reward;
 	
 	private String deadline;
 	
 	private String content;
+	
+	private String titleTmp;
+	
+	private Integer rewardTmp;
+	
+	private String deadlineTmp;
+	
+	private String contentTmp;
 	
 	private RequestType status;
 	

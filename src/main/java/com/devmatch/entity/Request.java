@@ -30,17 +30,48 @@ public class Request extends BaseEntity {
 	private String title;
 	
 	@Column(nullable = false)
-	private int reward;
+	private Integer reward;
 	
 	@Column(nullable = false)
 	private LocalDate deadline;
 
 	@Column(nullable = false)
 	private String content;
+
+	@Column(nullable = true)
+	private String titleTmp;
+	
+	@Column(nullable = true)
+	private Integer rewardTmp;
+	
+	@Column(nullable = true)
+	private LocalDate deadlineTmp;
+
+	@Column(nullable = true)
+	private String contentTmp;
 	
 	@Enumerated(EnumType.STRING)
 	private RequestType status;
 	
 	@Column(nullable = false)
 	private boolean accepted;
+	
+	public void adjustTmp() {
+		this.title = this.titleTmp;
+		this.reward = this.rewardTmp;
+		this.deadline = this.deadlineTmp;
+		this.content = this.contentTmp;
+		
+		this.titleTmp = null;
+		this.rewardTmp = null;
+		this.deadlineTmp = null;
+		this.contentTmp = null;
+	}
+	
+	public void revert() {
+		this.titleTmp = null;
+		this.rewardTmp = null;
+		this.deadlineTmp = null;
+		this.contentTmp = null;
+	}
 }

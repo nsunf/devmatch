@@ -30,6 +30,7 @@ import com.devmatch.dto.EditMemberFormDto;
 import com.devmatch.dto.PortfolioDto;
 import com.devmatch.dto.PortfolioFormDto;
 import com.devmatch.dto.ProfileFormDto;
+import com.devmatch.dto.RequestFormDto;
 import com.devmatch.dto.StackDto;
 import com.devmatch.dto.StackFormDto;
 import com.devmatch.entity.Member;
@@ -87,7 +88,9 @@ public class MypageController {
 	}
 	
 	@GetMapping("/requests")
+	@PreAuthorize("hasAnyRole('ROLE_PROVIDER', 'ROLE_CUSTOMER')")
 	public String requestList(@RequestParam Optional<Integer> page, Model model) {
+		// 역할에 따라 다름
 		Pageable pageable = PageRequest.of(page.orElse(0), 3);
 		model.addAttribute("requestDtoList", requestService.getRequestDtoList(pageable));
 		model.addAttribute("page", pageable.getPageNumber());
@@ -100,6 +103,41 @@ public class MypageController {
 		model.addAttribute("requestDto", requestService.getRequestDto(id));
 		return "mypage/requestDetail";
 	}
+	
+	@GetMapping("/requests/edit/{id}")
+	public String editRequest(@PathVariable Long id, Model model) {
+		model.addAttribute("requestFormDto", requestService.getRequestFormDto(id));
+		return "mypage/editRequest";
+	}
+	
+	@PostMapping("/requests/edit/{id}")
+	public String editRequest(@PathVariable Long id, @Valid RequestFormDto requestFormDto, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("requestFormDto", requestService.getRequestFormDto(id));
+			return "mypage/editRequest";
+		}
+		
+		try {
+			requestService.updateRequest(requestFormDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/mypage/requests/" + id;
+	}
+	
+	@GetMapping("/requests/revert/{id}")
+	public String revertRequest(@PathVariable Long id) {
+		requestService.revertRequest(id);
+		return "redirect:/mypage/requests/" + id;
+	}
+	
+	@GetMapping("/requests/cancel/{id}")
+	public String cancelRequest(@PathVariable Long id) {
+		requestService.cancelRequest(id);
+		return "redirect:/mypage/requests/" + id;
+	}
+	
 	
 //	PROVIDER
 	@PreAuthorize("hasRole('ROLE_PROVIDER')")
@@ -197,6 +235,27 @@ public class MypageController {
 		portfolioService.deletePortfolio(portfolioId);
 
 		return "redirect:/mypage/portfolios";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/requests/accept/{id}")
+	public String acceptRequest(@PathVariable Long id) {
+		requestService.acceptRequest(id);
+		return "redirect:/mypage/requests/" + id;
+	}
+	
+	@PreAuthorize("hasRole('ROLE_PROVIDER')")
+	@GetMapping("/requests/deny/{id}")
+	public String denyRequest(@PathVariable Long id) {
+		requestService.denyRequest(id);
+		return "redirect:/mypage/requests/" + id;
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_PROVIDER', 'ROLE_CUSTOMER')")
+	@GetMapping("/requests/complete/{id}")
+	public String completeRequest(@PathVariable Long id) {
+		requestService.completeRequest(id);
+		return "redirect:/mypage/requests/" + id;
 	}
 	
 	
