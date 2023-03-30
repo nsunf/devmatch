@@ -139,6 +139,7 @@ function loadPortfolio(portfolioId) {
   }
   
   function setPagination(page, maxPage, totalPage) {
+	  if (totalPage == 0) return;
 	  const commentList = document.getElementById("comment");
 	  const pagination = document.createElement("div");
 	  pagination.classList.add("row");

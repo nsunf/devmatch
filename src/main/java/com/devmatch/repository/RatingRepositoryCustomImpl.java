@@ -12,6 +12,7 @@ import com.devmatch.dto.QRatingDto;
 import com.devmatch.dto.RatingDto;
 import com.devmatch.entity.QMember;
 import com.devmatch.entity.QMemberImg;
+import com.devmatch.entity.QProfile;
 import com.devmatch.entity.QRating;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -27,12 +28,16 @@ public class RatingRepositoryCustomImpl implements RatingRepositoryCustom {
 	public Page<RatingDto> getRatingDtoByProfileId(Long profileId, Pageable pageable) {
 		QRating rating = QRating.rating;
 		QMemberImg memberImg = QMemberImg.memberImg;
+		QProfile profile = QProfile.profile;
 		
 		List<RatingDto> contents = qf
 				.select(new QRatingDto(rating, memberImg))
 				.from(rating)
 				.leftJoin(memberImg)
 				.on(rating.request.customer.id.eq(memberImg.member.id))
+				.join(profile)
+				.on(rating.request.provider.id.eq(profile.member.id))
+				.where(profile.id.eq(profileId))
 				.orderBy(rating.regTime.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
@@ -44,6 +49,9 @@ public class RatingRepositoryCustomImpl implements RatingRepositoryCustom {
 				.from(rating)
 				.leftJoin(memberImg)
 				.on(rating.request.customer.id.eq(memberImg.member.id))
+				.join(profile)
+				.on(rating.request.provider.id.eq(profile.member.id))
+				.where(profile.id.eq(profileId))
 				.fetchOne();
 
 		return new PageImpl<>(contents, pageable, total);
