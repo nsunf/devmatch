@@ -7,6 +7,11 @@ portfolios.forEach(el => {
   });
 });
 
+window.addEventListener("load", () => {
+	
+	getRatings(0);
+});
+
 
 function loadPortfolio(portfolioId) {
   const modal_title = document.getElementById("modalLabel");
@@ -70,6 +75,115 @@ function loadPortfolio(portfolioId) {
 //   });
 // };
   
+  function getRatings(page) {
+	  const token = document.querySelector("meta[name='_csrf']").getAttribute("content");
+	  const header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+
+		const pathArr = location.pathname.split("/");
+		const profileId = pathArr[pathArr.length - 1];
+	  
+	  fetch("/partners/rating", {
+		  method: "POST",
+		  headers: {
+			  header,
+			  "Content-Type": "application/json",
+			  "X-Requested-With": "XMLHttpRequest",
+			  "X-CSRF-Token": token
+		  },
+		  body: JSON.stringify({ profileId, page })
+	  }).then(res => res.json())
+	  .then(data => {
+		  const { ratingDtoList, page, maxPage } = data;
+		  createCommentCard(ratingDtoList.content);
+			setPagination(page, maxPage, ratingDtoList.totalPages)
+	  }).catch(err => {
+		  alert(err);
+	  })
+  }
+  
+  function createCommentCard(ratingDtoList) {
+	  const commentList = document.getElementById("comment");
+	  commentList.innerHTML = "";
+	  
+	  for (let i = 0; i < ratingDtoList.length; i++) {
+		  const { memberName, memberImgUrl, score, content, regDate } = ratingDtoList[i];
+
+			const cardEl = document.createElement("div");
+			cardEl.classList.add("card");
+			
+			cardEl.innerHTML = `
+					<div class="card-header hstack">
+						<div class="hstack">
+							<img class="rounded-circle object-fit-cover" src="${memberImgUrl == null ? '/images/empty-profile-img.jpg' : memberImgUrl }" alt="" width="40px" height="40px">
+							<span class="ms-2">${memberName}</span>
+						</div>
+						<div class="ms-auto">
+							<div class="star-group rate-${score}">
+								<div class="star"></div>
+								<div class="star"></div>
+								<div class="star"></div>
+								<div class="star"></div>
+								<div class="star"></div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<blockquote class="blockquote vstack mb-0">
+							<p class="fs-6 mb-1">${content}</p>
+							<span class="fs-6 fw-light text-muted ms-auto">${regDate}</span>
+						</blockquote>
+					</div>
+			`;
+	  	commentList.appendChild(cardEl); 
+	  }
+  }
+  
+  function setPagination(page, maxPage, totalPage) {
+	  const commentList = document.getElementById("comment");
+	  const pagination = document.createElement("div");
+	  pagination.classList.add("row");
+	  pagination.classList.add("mt-5");
+	  
+	  const start = Math.floor(page/maxPage) * maxPage + 1;
+	  const end = totalPage == 0 ? 1 : start + (maxPage - 1) < totalPage ? start + (maxPage - 1) : totalPage;
+	  
+	  let pageItems = "";
+	  
+	  for (let i = start; i <= end; i++) {
+		  pageItems += `
+					<li class="page-item ${page == i - 1 ? 'active' : null}" onclick="getRatings(${i - 1})">
+						<a class="page-link" href="#comment">${i}</a>
+					</li>
+		  `;
+	  }
+	  
+	  pagination.innerHTML = `
+			<div class="row mt-5">
+				<nav class="col hstack" aria-label="Page navigation example">
+					<ul class="pagination mx-auto">
+
+						<li class="page-item ${page == 0 ? 'disabled': null}">
+							<a class="page-link" aria-label="Previous" href="#comment onclick="getRatings(${page - 1})">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+
+						${pageItems}
+
+						<li class="page-item ${page + 1 >= totalPage ? 'disabled' : null}">
+							<a class="page-link" aria-label="Next" href="#comment onclick="getRatings(${page + 1})">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+
+					</ul>
+				</nav>
+			</div>
+	  `;
+	  
+	  commentList.appendChild(pagination);
+  }
+
   function setModalScrolling() {
 		const isModalOpened = document.body.classList.contains("modal-open");
 		document.documentElement.style.overflowY = isModalOpened ? "hidden" : "initial";

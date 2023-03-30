@@ -2,9 +2,12 @@ package com.devmatch.service;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devmatch.dto.RatingDto;
 import com.devmatch.dto.RatingFormDto;
 import com.devmatch.entity.Rating;
 import com.devmatch.entity.Request;
@@ -40,5 +43,9 @@ public class RatingService {
 	public RatingFormDto getRatingFormDto(Long requestId) {
 		Rating rating = ratingRepo.findByRequestId(requestId);
 		return rating == null ? new RatingFormDto() : new RatingFormDto(rating);
+	}
+	
+	public Page<RatingDto> getRatingDtoList(Long profileId, Pageable pageable) {
+		return ratingRepo.getRatingDtoByProfileId(profileId, pageable);
 	}
 }

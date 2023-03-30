@@ -5,14 +5,11 @@ erd estimation 수정 필요
 firebase 알림
 todo --------------------------------------------------------------------
 main
-메인 파트너 찾기 버튼 링크
 
 partner
-	partner detail - sidebar scroll effect
 	profile detail 줄바꿈
 
 request
-	별점
 	마감일 현재 시점 이후로만 가능
 	요청 트랜잭션
 	요청 버튼 alert 처리
@@ -25,3 +22,6 @@ mypage
 
 done --------------------------------------------------------------------
 	검색 시 제목, 내용 검색
+	메인 파트너 찾기 버튼 링크
+	별점
+	rating comments

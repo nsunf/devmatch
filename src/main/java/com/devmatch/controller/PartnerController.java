@@ -28,9 +28,11 @@ import com.devmatch.dto.PartnerSearchDto;
 import com.devmatch.dto.PortfolioDto;
 import com.devmatch.dto.ProfileCardDto;
 import com.devmatch.dto.ProfileDto;
+import com.devmatch.dto.RatingDto;
 import com.devmatch.dto.RequestFormDto;
 import com.devmatch.service.PortfolioService;
 import com.devmatch.service.ProfileService;
+import com.devmatch.service.RatingService;
 import com.devmatch.service.RequestService;
 import com.devmatch.service.StackService;
 
@@ -45,6 +47,7 @@ public class PartnerController {
 	private final StackService stackService; 
 	private final PortfolioService portfolioService;
 	private final RequestService requestService;
+	private final RatingService ratingService;
 	
 	@GetMapping("")
 	public String partners(PartnerSearchDto partnerSearchDto, Model model) {
@@ -69,6 +72,7 @@ public class PartnerController {
 	public String partnerProfile(@PathVariable Long partnerId, Model model) {
 		ProfileDto profileDto = profileService.getProfileDto(partnerId);
 		List<PortfolioDto> portfolioDtoLIst = portfolioService.getPortfolioDtoListByProfileId(profileDto.getId(), 4);
+
 		model.addAttribute("profileDto", profileDto);
 		model.addAttribute("portfolioDtoList", portfolioDtoLIst);
 		return "partners/profile";
@@ -101,5 +105,27 @@ public class PartnerController {
 	public String requestSuccess(Model model) {
 		model.addAttribute("title", "request success");
 		return "success";
+	}
+	
+	@PostMapping("/rating")
+	@ResponseBody
+	public ResponseEntity<?> ratingList(@RequestBody Map<String, String> map) {
+		Object obj = map.get("profileId");
+		if (obj == null) {
+			return new ResponseEntity<String>("프로필 아이디가 유효하지 않음", HttpStatus.BAD_REQUEST);
+		}
+
+		Long profileId = Long.valueOf((String)obj);
+		Integer page = Integer.valueOf(map.getOrDefault("page", "0"));
+		Pageable pageable = PageRequest.of(page, 3);
+		
+		Page<RatingDto> ratingDtoList = ratingService.getRatingDtoList(profileId, pageable);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("ratingDtoList", ratingDtoList);
+		result.put("page", pageable.getPageNumber());
+		result.put("maxPage", 5);
+
+		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 }

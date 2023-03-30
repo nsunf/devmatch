@@ -4,7 +4,10 @@
 	layout:decorate="~{layouts/layout1}">
 <head>
 <title>Insert title here</title>
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <link href="/css/global.css" rel="stylesheet">
+<link href="/css/star.css" rel="stylesheet">
 <link href="/css/findPartner.css" rel="stylesheet">
 </head>
 <body>
