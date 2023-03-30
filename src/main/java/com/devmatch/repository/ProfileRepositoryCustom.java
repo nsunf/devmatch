@@ -10,6 +10,7 @@ import com.devmatch.dto.ProfileDto;
 
 public interface ProfileRepositoryCustom {
 	Page<ProfileCardDto> getProfileCardDtoList(String searchQuery, List<Long> stackIdList, Pageable pageable);
+	ProfileCardDto getProfileCardDtoByMemberId(Long memberId);
 	
 	ProfileDto getProfileDto(Long profileId);
 }

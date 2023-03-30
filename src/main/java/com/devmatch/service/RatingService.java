@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devmatch.dto.RatingDto;
 import com.devmatch.dto.RatingFormDto;
+import com.devmatch.entity.Member;
 import com.devmatch.entity.Rating;
 import com.devmatch.entity.Request;
 import com.devmatch.repository.RatingRepository;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class RatingService {
 	private final RatingRepository ratingRepo;
 	private final RequestRepository requestRepo;
+	private final MemberService memberService;
 	
 	public void rate(RatingFormDto formDto) {
 		Long ratingId = formDto.getId();
@@ -40,12 +42,20 @@ public class RatingService {
 		}
 	}
 	
+	@Transactional(readOnly = true)
 	public RatingFormDto getRatingFormDto(Long requestId) {
 		Rating rating = ratingRepo.findByRequestId(requestId);
 		return rating == null ? new RatingFormDto() : new RatingFormDto(rating);
 	}
 	
+	@Transactional(readOnly = true)
 	public Page<RatingDto> getRatingDtoList(Long profileId, Pageable pageable) {
 		return ratingRepo.getRatingDtoByProfileId(profileId, pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public Double getAverage() {
+		Member member = memberService.getMember();
+		return ratingRepo.getAverageByMemberId(member.getId());
 	}
 }

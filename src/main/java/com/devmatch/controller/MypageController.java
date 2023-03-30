@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,8 +62,18 @@ public class MypageController {
 	
 	@GetMapping("/dashboard")
 	public String admin(Model model, Principal principal) {
-		model.addAttribute("memberDto", memberService.getMemberDtoByEmail(principal.getName()));
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_PROVIDER"))) {
+			model.addAttribute("profileCardDto", profileService.getProfileCardDto());
+			model.addAttribute("ratingAvg", ratingService.getAverage());
+			model.addAttribute("successRate", requestService.getSuccessRate());
+		} else if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
+			model.addAttribute("totalRequest", requestService.getTotalRequest());
+		}
 
+		model.addAttribute("memberDto", memberService.getMemberDtoByEmail(principal.getName()));
+		model.addAttribute("completedRequestCount", requestService.getCompletedRequestCount());
+		model.addAttribute("progressingRequestCount", requestService.getProgressingRequestCount());
 		return "mypage/dashboard";
 	}
 

@@ -49,6 +49,12 @@ public class ProfileService {
 		return new ProfileFormDto(profile, profileImgDtoList);
 	}
 	
+	@Transactional(readOnly = true)
+	public ProfileCardDto getProfileCardDto() {
+		Member member = memberService.getMember();
+		return profileRepo.getProfileCardDtoByMemberId(member.getId());
+	}
+	
 	public void updateProfile(Member member, ProfileFormDto profileFormDto, List<MultipartFile> profileImgFileList) throws IOException {
 		Profile	profile = profileRepo.findByMemberId(member.getId()).orElse(null);
 		if (profile == null) {

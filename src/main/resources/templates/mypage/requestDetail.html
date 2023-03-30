@@ -6,6 +6,7 @@
 <head>
 <title>Insert title here</title>
 <link href="/css/global.css" rel="stylesheet">
+<link href="/css/star.css" rel="stylesheet">
 <style>
 	.card {
 		transition: 150ms;
@@ -108,7 +109,14 @@
 				</div>
 				<div class="col-md-10 mx-auto my-4" th:if="${requestDto.status eq T(com.devmatch.constant.RequestType).COMPLETE && requestDto.accepted}">
 					<div class="hstack justify-content-end gap-4">
-						<button id="comment-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#comment-popup">[[${ratingFormDto.id == null ? '평가하기' : '평가수정하기'}]]</button>
+						<div class="star-group" th:classappend="${'rate-' + ratingFormDto.score}">
+							<div class="star"></div>
+							<div class="star"></div>
+							<div class="star"></div>
+							<div class="star"></div>
+							<div class="star"></div>
+						</div>
+						<button id="comment-btn" class="btn btn-primary" sec:authorize="hasRole('ROLE_CUSTOMER')" data-bs-toggle="modal" data-bs-target="#comment-popup">[[${ratingFormDto.id == null ? '평가하기' : '평가수정하기'}]]</button>
 					</div>
 				</div>
 			</div>

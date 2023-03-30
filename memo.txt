@@ -17,11 +17,13 @@ member
 	logged in redirection
 	login failure page
 	로그인 시 어느 페이지로 가게 되는
-mypage
+	등급
+mypag
 	회원 이름, 이메일 구분
-
+	admin graph
 done --------------------------------------------------------------------
 	검색 시 제목, 내용 검색
 	메인 파트너 찾기 버튼 링크
 	별점
 	rating comments
+	dashboard

@@ -189,4 +189,29 @@ public class RequestService {
 			request.setAccepted(false);
 		}
 	}
+	
+	public Long getCompletedRequestCount() {
+		Member member = memberService.getMember();
+		return requestRepo.countByCustomerIdAndStatusAndAccepted(member.getId(), RequestType.COMPLETE, true);
+	}
+	
+	public Long getProgressingRequestCount() {
+		Member member = memberService.getMember();
+		if (member.getRole() == MemberRole.PROVIDER)
+			return requestRepo.countByProviderIdAndStatusAndAccepted(member.getId(), RequestType.PROGRESS, true);
+		else
+			return requestRepo.countByCustomerIdAndStatusAndAccepted(member.getId(), RequestType.PROGRESS, true);
+	}
+	
+	public Integer getSuccessRate() {
+		Member member = memberService.getMember();
+		Long comp = requestRepo.countByProviderIdAndStatusAndAccepted(member.getId(), RequestType.COMPLETE, true);
+		Long canc = requestRepo.countByProviderIdAndStatusAndAccepted(member.getId(), RequestType.CANCEL, true);
+		Double result = (comp.doubleValue() / (comp + canc)) * 100;
+		return result.intValue();
+	}
+	
+	public Long getTotalRequest() {
+		return requestRepo.count();
+	}
 }

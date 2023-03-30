@@ -84,6 +84,25 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 		
 		return new PageImpl<>(contents, pageable, total);
 	}
+	
+	@Override
+	public ProfileCardDto getProfileCardDtoByMemberId(Long memberId) {
+		QProfile profile = QProfile.profile;
+		QMember member = QMember.member;
+		QMemberImg memberImg = QMemberImg.memberImg;
+		
+		ProfileCardDto content = qf
+				.select(new QProfileCardDto(profile.id, member.first_name, member.last_name, memberImg.imgUrl, profile.title, profile.subTitle))
+				.from(profile)
+				.join(member)
+				.on(profile.member.id.eq(member.id))
+				.leftJoin(memberImg)
+				.on(member.id.eq(memberImg.member.id))
+				.where(member.id.eq(memberId))
+				.fetchFirst();
+
+		return content;
+	}
 
 	@Override
 	public ProfileDto getProfileDto(Long profileId) {

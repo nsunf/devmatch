@@ -7,4 +7,5 @@ import com.devmatch.dto.RatingDto;
 
 public interface RatingRepositoryCustom {
 	Page<RatingDto> getRatingDtoByProfileId(Long profileId, Pageable pageable);
+	Double getAverageByMemberId(Long memberId);
 }

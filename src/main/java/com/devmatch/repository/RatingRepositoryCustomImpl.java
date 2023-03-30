@@ -56,4 +56,17 @@ public class RatingRepositoryCustomImpl implements RatingRepositoryCustom {
 
 		return new PageImpl<>(contents, pageable, total);
 	}
+	
+	@Override
+	public Double getAverageByMemberId(Long memberId) {
+		QRating rating = QRating.rating;
+		
+		Double result = qf
+				.select(rating.score.avg())
+				.from(rating)
+				.where(rating.request.provider.id.eq(memberId))
+				.fetchFirst();
+		
+		return Math.round(result * 100) / 100d;
+	}
 }
