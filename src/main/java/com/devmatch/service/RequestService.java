@@ -3,6 +3,7 @@ package com.devmatch.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devmatch.constant.MemberRole;
 import com.devmatch.constant.RequestType;
 import com.devmatch.dto.MemberDto;
+import com.devmatch.dto.MonthlyRequestDto;
 import com.devmatch.dto.RequestDto;
 import com.devmatch.dto.RequestFormDto;
 import com.devmatch.entity.Member;
@@ -213,5 +215,9 @@ public class RequestService {
 	
 	public Long getTotalRequest() {
 		return requestRepo.count();
+	}
+	
+	public List<MonthlyRequestDto> getMonthlyRequestDtoList() {
+		return requestRepo.getMonthlyRequestDtoList();
 	}
 }

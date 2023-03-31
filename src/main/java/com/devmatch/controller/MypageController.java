@@ -69,6 +69,8 @@ public class MypageController {
 			model.addAttribute("successRate", requestService.getSuccessRate());
 		} else if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
 			model.addAttribute("totalRequest", requestService.getTotalRequest());
+			model.addAttribute("monthlyRequestKeyList", requestService.getMonthlyRequestDtoList().stream().map(r -> r.getMonth()).toList());
+			model.addAttribute("monthlyRequestDtoList", requestService.getMonthlyRequestDtoList());
 		}
 
 		model.addAttribute("memberDto", memberService.getMemberDtoByEmail(principal.getName()));

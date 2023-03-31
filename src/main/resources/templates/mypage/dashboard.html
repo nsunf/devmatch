@@ -12,17 +12,17 @@
 <body>
 	<th:block layout:fragment="content">
 		<div class="col-lg-8">
-			<div class="row row-cols-1 row-cols-md-2 gy-4">
+			<div class="row gy-4">
 				<!-- 고객 -->
 				<th:block sec:authorize="hasRole('ROLE_CUSTOMER')">
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="border rounded-4 vstack p-5 text-center" style="aspect-ratio: 16/9;">
 							<h5 class="fs-3 mb-3 mt-auto">[[${memberDto.name}]]</h5>
 							<p class="mb-0">[[${memberDto.email}]]</p>
 							<p class="mb-auto">등록일 : <span>[[${memberDto.regDate}]]</span></p>
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="border rounded-4 vstack" style="aspect-ratio: 16/9;">
 							<div class="ps-5 mb-4 mt-auto">요청통계</div>
 							<div class="hstack gap-5 mb-auto">
@@ -40,7 +40,7 @@
 				</th:block>
 				<!-- 파트너  -->
 				<th:block sec:authorize="hasRole('ROLE_PROVIDER')">
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="profile-card-adapt background-gradient-1">
 							<div class="profile-card__top">
 								<div class="profile-card__grade">
@@ -58,7 +58,7 @@
 						</div>
 					</div>
 
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="border rounded-4 vstack p-5 text-center" style="aspect-ratio: 16/9;">
 							<h5 class="fs-3 mb-3 mt-auto">[[${memberDto.name}]]</h5>
 							<p class="mb-0">[[${memberDto.email}]]</p>
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="border rounded-4 vstack" style="aspect-ratio: 16/9;">
 							<div class="mx-auto mt-auto mb-4">
 								<div class="star-group" th:classappend="${'rate-' + ratingAvg.intValue + (ratingAvg - T(java.lang.Math).floor(ratingAvg) >= 0.5 ? '-half' : '')}">
@@ -83,7 +83,7 @@
 						</div>
 					</div>
 
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="border rounded-4 vstack" style="aspect-ratio: 16/9;">
 							<div class="hstack gap-5 my-auto">
 								<div class="ms-auto ">
@@ -100,7 +100,7 @@
 				</th:block>
 				<!-- 관리자 -->
 				<th:block sec:authorize="hasRole('ROLE_ADMIN')">
-					<div class="col" th:object="${memberDto}">
+					<div class="col-12 col-md-6" th:object="${memberDto}">
 						<div class="border rounded-4 vstack p-5 text-center" style="aspect-ratio: 16/9;">
 							<h5 class="fs-3 mb-3 mt-auto" th:text="*{name}">Username</h5>
 							<p class="mb-0" th:text="*{email}">email@email.com</p>
@@ -108,7 +108,7 @@
 						</div>
 					</div>
 
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="border rounded-4 vstack" style="aspect-ratio: 16/9;">
 							<div class="mx-auto mt-auto">
 									<div class="d-flex justify-content-center align-items-center fs-2 rounded-4 py-3 px-4 bg-primary text-white mb-3" >[[${totalRequest}]]</div>
@@ -117,7 +117,7 @@
 						</div>
 					</div>
 
-					<div class="col">
+					<div class="col-12">
 						<div>
 							<canvas id="myChart"></canvas>
 						</div>
@@ -126,6 +126,69 @@
 
 			</div>
 		</div>
+	</th:block>
+	<th:block layout:fragment="script-bottom">
+ 		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+		<script>
+			console.log([[${monthlyRequestKeyList}]]);
+			const ctx = document.getElementById('myChart');
+			ctx.style.width = "100%";
+			
+			const date = new Date();
+			let month = date.getMonth() + 1;
+			
+			let monthArr = [];
+			let data = [0, 0, 0, 0, 0, 0];
+
+			for (let i = 0; i < 6; i++) {
+				monthArr.unshift(month);
+				month = month - 1 == 0 ? 12 : month - 1;
+			}
+ 			const keyList = [[${monthlyRequestKeyList}]];
+
+ 			for (let i = 0; i < keyList.length; i++) {
+				const idx = monthArr.findIndex(n => n == keyList[i]);
+				data[idx] = [[${monthlyRequestDtoList.get(0).count}]];
+			}
+ 
+			new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: monthArr,
+					datasets: [
+						{
+							label: "총 요청량",
+							data: data,
+							borderWidth: 2,
+							borderColor: "#F1827E",
+							backgroundColor: "#F1827E",
+							pointStyle: 'rectRounded',
+							pointRadius: 5,
+							pointHoverRadius: 8
+						}
+					]
+				},
+				options: {
+					responsive: false,
+					scales: {
+						y: {
+							beginAtZero: true
+						},
+						x: {
+							ticks: {
+								callback: (value, index, ticks) => monthArr[index] + "월"
+							}
+						}
+					},
+					plugins: {
+						title: {
+							display: false,
+							text: ctx => "Point Style: " + ctx.chart.data.datasets[0].pointStyle
+						}
+					}
+				}
+			});
+		</script>
 	</th:block>
 </body>
 </html>

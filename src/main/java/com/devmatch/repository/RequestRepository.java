@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.devmatch.constant.RequestType;
 import com.devmatch.entity.Request;
 
-public interface RequestRepository extends JpaRepository<Request, Long> {
+public interface RequestRepository extends JpaRepository<Request, Long>, RequestRepositoryCustom {
 	Page<Request> findByCustomerIdOrderByRegTimeDesc(Long customerId, Pageable pageable);
 	Page<Request> findByProviderIdOrderByRegTimeDesc(Long providerId, Pageable pageable);
 	Long countByCustomerIdAndStatusAndAccepted(Long customerId, RequestType status, boolean isAccepted);
