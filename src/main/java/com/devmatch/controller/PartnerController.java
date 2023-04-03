@@ -30,6 +30,7 @@ import com.devmatch.dto.ProfileCardDto;
 import com.devmatch.dto.ProfileDto;
 import com.devmatch.dto.RatingDto;
 import com.devmatch.dto.RequestFormDto;
+import com.devmatch.service.GradeService;
 import com.devmatch.service.PortfolioService;
 import com.devmatch.service.ProfileService;
 import com.devmatch.service.RatingService;
@@ -48,6 +49,7 @@ public class PartnerController {
 	private final PortfolioService portfolioService;
 	private final RequestService requestService;
 	private final RatingService ratingService;
+//	private final GradeService gradeService;
 	
 	@GetMapping("")
 	public String partners(PartnerSearchDto partnerSearchDto, Model model) {

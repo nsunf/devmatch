@@ -36,6 +36,13 @@ public class Member extends BaseEntity {
 	@Column(nullable = false)
 	private String password;
 	
+	@Column(nullable = false)
+	private Long point;
+	
+	@JoinColumn(nullable = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Grade grade;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private MemberRole role;

@@ -44,7 +44,7 @@
 						<div class="profile-card-adapt background-gradient-1">
 							<div class="profile-card__top">
 								<div class="profile-card__grade">
-									<img src="../images/grade/Level=1.png" alt="grad-img">
+									<img th:src="${profileCardDto.gradeImgUrl}" alt="grad-img">
 								</div>
 								<div class="profile-card__desc">
 									<h5 class="desc__greeting">[[${profileCardDto.title}]]</h5>
@@ -63,6 +63,15 @@
 							<h5 class="fs-3 mb-3 mt-auto">[[${memberDto.name}]]</h5>
 							<p class="mb-0">[[${memberDto.email}]]</p>
 							<p class="mb-auto">등록일 : <span>[[${memberDto.regDate}]]</span></p>
+						</div>
+					</div>
+
+					<div class="col-12 col-md-6">
+						<div class="border rounded-4 vstack" style="aspect-ratio: 16/9;">
+							<div class="mx-auto my-auto">
+								<p class="text-center">포인트</p>
+								<div class="d-flex justify-content-center align-items-center fs-2 rounded-4 py-3 px-4 bg-primary text-white mb-3" >[[${memberDto.point}]]</div>
+							</div>
 						</div>
 					</div>
 
@@ -129,8 +138,7 @@
 	</th:block>
 	<th:block layout:fragment="script-bottom">
  		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
-		<script>
-			console.log([[${monthlyRequestKeyList}]]);
+		<script sec:authorize="hasRole('ROLE_ADMIN')">
 			const ctx = document.getElementById('myChart');
 			ctx.style.width = "100%";
 			

@@ -75,7 +75,7 @@ function appendProfile(profileCardDto) {
       <div class="profile-card background-gradient-1 mx-auto">
         <div class="profile-card__top">
           <div class="profile-card__grade">
-            <img src="../images/grade/Level=1.png" alt="grad-img">
+            <img src="${profileCardDto.gradeImgUrl}" alt="grad-img">
           </div>
           <div class="profile-card__desc">
             <h5 class="desc__greeting">${profileCardDto.title}</h5>

@@ -2,18 +2,24 @@ package com.devmatch.entity;
 
 import javax.persistence.*;
 
-public class Grade {
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Entity
+public class Grade {
 	@Id
 	@Column(name = "grade_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Column(nullable = false)
 	private Integer gradeValue;
 
-	private Integer numOfProj;
+	@Column(nullable = false)
+	private Long refScore;
 	
-	private Integer totalPrice;
-	
+	@Column(nullable = false)
 	private String gradeImgUrl;
 }

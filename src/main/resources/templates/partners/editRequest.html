@@ -17,7 +17,7 @@
         <div class="profile-card-adapt background-gradient-1">
           <div class="profile-card__top">
             <div class="profile-card__grade">
-              <img src="/images/grade/Level=1.png" alt="grad-img">
+              <img th:src="${profileDto.gradeImgUrl}" alt="grad-img">
             </div>
             <div class="profile-card__desc">
               <h5 class="desc__greeting" th:text="*{title}">Java Spring Boot 백엔드 개발자</h5>

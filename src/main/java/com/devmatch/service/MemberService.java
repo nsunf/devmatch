@@ -24,6 +24,7 @@ import com.devmatch.config.CustomUser;
 import com.devmatch.dto.EditMemberFormDto;
 import com.devmatch.dto.MemberDto;
 import com.devmatch.dto.MemberFormDto;
+import com.devmatch.entity.Grade;
 import com.devmatch.entity.Member;
 import com.devmatch.entity.MemberImg;
 import com.devmatch.repository.MemberRepository;
@@ -36,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberService implements UserDetailsService {
 	private final MemberRepository memberRepo;
 	private final MemberImgService memberImgService;
+	private final GradeService gradeService;
 	
 	public Member getMember() {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -58,8 +60,11 @@ public class MemberService implements UserDetailsService {
 	
 	public void signup(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		Member member = memberFormDto.toEntity(passwordEncoder);
-		
 		validateDuplicate(member);
+
+		Grade grade = gradeService.getInitialGrade();
+		member.setGrade(grade);
+		
 		memberRepo.save(member);
 	}
 	

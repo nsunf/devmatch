@@ -22,10 +22,13 @@ public class MemberDto {
 	
 	private String imgUrl;
 	
+	private Long point;
+	
 	public MemberDto(Member member) {
 		this.id = member.getId();
 		this.email = member.getEmail();
 		this.name = member.getLast_name() + member.getFirst_name();
 		this.regDate = member.getRegTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.point = member.getPoint();
 	}
 }

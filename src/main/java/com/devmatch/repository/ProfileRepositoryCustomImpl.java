@@ -62,7 +62,7 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 		QMemberImg memberImg = QMemberImg.memberImg;
 		
 		JPAQuery<ProfileCardDto> q = qf
-				.select(new QProfileCardDto(profile.id, member.first_name, member.last_name, memberImg.imgUrl, profile.title, profile.subTitle))
+				.select(new QProfileCardDto(profile.id, member.first_name, member.last_name, memberImg.imgUrl, profile.title, profile.subTitle, member.grade.gradeValue, member.grade.gradeImgUrl))
 				.from(profile)
 				.join(profile.member, member)
 				.leftJoin(memberImg)
@@ -92,7 +92,7 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 		QMemberImg memberImg = QMemberImg.memberImg;
 		
 		ProfileCardDto content = qf
-				.select(new QProfileCardDto(profile.id, member.first_name, member.last_name, memberImg.imgUrl, profile.title, profile.subTitle))
+				.select(new QProfileCardDto(profile.id, member.first_name, member.last_name, memberImg.imgUrl, profile.title, profile.subTitle, member.grade.gradeValue, member.grade.gradeImgUrl))
 				.from(profile)
 				.join(member)
 				.on(profile.member.id.eq(member.id))
@@ -111,7 +111,7 @@ public class ProfileRepositoryCustomImpl implements ProfileRepositoryCustom {
 		QMemberImg memberImg = QMemberImg.memberImg;
 		
 		ProfileDto result = qf.
-				select(new QProfileDto(profile.id, profile.title, profile.subTitle, profile.content, member.id, member.email, member.first_name, member.last_name, memberImg.imgUrl))
+				select(new QProfileDto(profile.id, profile.title, profile.subTitle, profile.content, member.id, member.email, member.first_name, member.last_name, memberImg.imgUrl, member.grade.gradeValue, member.grade.gradeImgUrl))
 				.from(profile)
 				.join(profile.member, member)
 				.leftJoin(memberImg)

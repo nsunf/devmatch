@@ -31,6 +31,7 @@ public class RequestService {
 	private final RequestRepository requestRepo;
 	private final MemberService memberService;
 	private final ProfileService profileService;
+	private final GradeService gradeService;
 
 	public void createRequest(RequestFormDto requestFormDto) {
 		Member customer = memberService.getMember();
@@ -141,6 +142,7 @@ public class RequestService {
 			request.setAccepted(true);
 		} else if (reqType == RequestType.COMPLETE) {
 			// 완료 시 등급 포인트
+//			gradeService.addPoint(request.getProvider(), request.getReward());
 			request.setAccepted(true);
 		} else if (reqType == RequestType.CANCEL) {
 			request.setAccepted(true);
@@ -186,6 +188,7 @@ public class RequestService {
 		if (request.getStatus() == RequestType.COMPLETE && !request.isAccepted()) {
 			request.setStatus(RequestType.COMPLETE);
 			request.setAccepted(true);
+			gradeService.addPoint(request.getProvider(), request.getReward());
 		} else {
 			request.setStatus(RequestType.COMPLETE);
 			request.setAccepted(false);
